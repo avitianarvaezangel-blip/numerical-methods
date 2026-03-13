@@ -1,10 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Fri Mar 13 00:18:04 2026
-
-@author: AVITIA
-"""
-
 import numpy as np
 
 # funcion
@@ -76,4 +69,5 @@ print("b =",b)
 # evaluacion de la funcion
 
 x = Eliminacion_Gaussiana(A, b)
+
 print("x = ", x)
