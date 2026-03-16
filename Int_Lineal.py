@@ -2,24 +2,41 @@ import numpy as np
 import matplotlib.pyplot as plt 
 import scipy as sc
 
+
+def f(x):
+    return np.log(x)
+
 # Datos
-x = np.array([7.6953, 7.9413])
-y = np.array([100, 150])
+x = np.array([1, 4])
+y = np.array([np.log(1), np.log(4)])
 
 # vector de datos 
-xi2 = np.linspace(7.6953, 7.9413, 100)
+xi = np.linspace(0.1, 7, 100)
 # yi = y1 + ((y2 - y1)*(xi - x1))/(x2 -x1)  
-yi = sc.interpolate.interp1d(x, y, kind="linear")
-xi = 7.8
-yi2 = yi(xi)  
-print("yi = ", yi2)       
+fi = sc.interpolate.interp1d(x, y, kind="linear")
+xi2 = 2
+fi2 = fi(xi2) 
+fx = f(xi2) 
+fxi = f(xi)
+
+x2 = [2]
+y2 = [np.log(2)]
+y3 = [fi2]
+
+et = abs((fx - fi2)/fx)*100
+print("f(2) =", fx)
+print("f(2),Aprox = ", fi2)    
+print("et = ",et, "%")   
 
 # grafica 
-plt.plot(x, y,"o")
-plt.plot(xi2, yi(xi2), "-")
-plt.plot(xi, yi2, "sr")
-plt.xlabel("x")
-plt.ylabel("y")
-plt.legend(["Puntos (x,y)","Funcion Lineal Aproximada", "Dato Interpolado"])
+plt.plot(xi, fxi, color='b', label='f(x) = ln(x)')
+plt.plot(x, y, "o", color='r', label='P1(1, ln(1)) -- P2(4, ln(4))')
+plt.plot(x, y, color='g', label='Linea')
+plt.plot(x2, y2, 'o', color='k', label='Valor Real')
+plt.plot(x2, y3,'o', color='r', label='Valor Interpolado')
+plt.legend()
 plt.title("Interpolacion Lineal")
+plt.xlabel("x")
+plt.ylabel("f(x)")
 plt.grid()
+plt.show()
