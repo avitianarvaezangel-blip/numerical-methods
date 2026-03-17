@@ -11,8 +11,7 @@ x = np.array([1, 4, 6])
 y = np.array([np.log(1),  np.log(4), np.log(6)])
 
 # vector de datos 
-xi = np.linspace(1, 6, 100)
-# yi = y1 + ((y2 - y1)*(xi - x1))/(x2 -x1)  
+xi = np.linspace(1, 6, 100) 
 fi = sc.interpolate.interp1d(x, y, kind="quadratic")
 xi2 = 2
 fi2 = fi(xi2)
