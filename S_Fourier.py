@@ -1,48 +1,79 @@
-import sympy as sp
 import numpy as np
+import sympy as sp
 import matplotlib.pyplot as plt
 
+
+# Variable x simbolica
 x = sp.Symbol('x')
-n = sp.Symbol('n', integer=True, positive=True)
 
-f = -x/(2*sp.pi) + 1
+# Variable n simbolica y entera
+n = sp.Symbol('n', integer=True)
 
-# coeficientes
-a0 = (1/sp.pi)*sp.integrate(f, (x,0,2*sp.pi))
+# funcion simbolica
+f = sp.exp(x)
 
-an = (1/sp.pi)*sp.integrate(f*sp.cos(n*x), (x,0,2*sp.pi))
+# Periodo
+T = 2 * sp.pi
 
-bn = (1/sp.pi)*sp.integrate(f*sp.sin(n*x), (x,0,2*sp.pi))
+# Omega 0
+w0 = (2 * sp.pi)/T
 
-print("a0 =", sp.simplify(a0))
-print("an =", sp.simplify(an))
-print("bn =", sp.simplify(bn))
+# Coeficientes de Fourier
 
-# aproximacion de Fourier
+a0 = (2/T)*sp.integrate(f,(x, -sp.pi, sp.pi))
+
+an = (2/T)*sp.integrate(f * sp.cos(n * w0 * x),(x, -sp.pi, sp.pi))
+
+bn = (2/T)*sp.integrate(f * sp.sin(n * w0 * x),(x, -sp.pi, sp.pi))
+
+# Coeficientes Simplificados
+
+a0 = sp.simplify(a0)
+an = sp.simplify(an)
+bn = sp.simplify(bn)
+
+# Moatrar coeficientes 
+print("a0 =", a0)
+print("an =", an)
+print("bn =", bn)
+
+# Serie de Fourier
+
+# numero de terminos
 N = 20
 
-S = a0/2
+# Inicio con el termino a0/2
 
-for k in range(1,N+1):
-    ak = an.subs(n,k)
-    bk = bn.subs(n,k)
-    S = S + ak*sp.cos(k*x) + bk*sp.sin(k*x)
+S = a0/2 
 
+for i in range(1, N + 1):
+    
+    ai = an.subs(n, i)
+    
+    bi = bn.subs(n, i)
+    
+    S = S + ai * sp.cos(i * w0 * x) + bi * sp.sin(i * w0 * x)
+    
 S = sp.simplify(S)
 
-# funciones numericas
-f_num = sp.lambdify(x,f,'numpy')
-S_num = sp.lambdify(x,S,'numpy')
+print("S = ",S)
 
-xx = np.linspace(0,2*np.pi,400)
+fn = sp.lambdify(x, f, 'numpy')
 
-plt.plot(xx,f_num(xx),label='f(x)')
-plt.plot(xx,S_num(xx),'--',label='Serie Fourier N=20')
+Sn = sp.lambdify(x, S, 'numpy')
 
-plt.legend()
+xi = np.linspace(- np.pi, np.pi, 100)
+
+plt.plot(xi, fn(xi), label=r'$f(x) = e^{x}$', color='b')
+
+plt.plot(xi, Sn(xi), 
+         label=r'$ \frac{2 \sinh{\pi}}{\pi} \left\{ \frac{1}{2} + \sum_{1}^{\infty} \frac{(-1)^n}{n^2 + 1} [\cos(n x) - n \sin(nx)] \right\}$',
+         color='r')
+
+plt.legend(fontsize=12)
+
+plt.title("Serie de Fourier", fontsize=20)
+    
 plt.grid()
-plt.xlabel("x")
-plt.ylabel("y")
-plt.title("Serie de Fourier")
 
 plt.show()
