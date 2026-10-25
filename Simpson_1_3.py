@@ -74,13 +74,14 @@ def Simpson_1_3(f, x0, xn,I, ItMax):
         
         # Actualizar 
         s_a = (h/3)*S
-
-        # Aumento en el número de subintervalos
-        n = n + 2
         
+        # criterio de paro
         if ea < 0.001:
             
             break
+
+        # Aumento en el número de subintervalos
+        n = n + 2
 
     return (h/3)*S, A,n
 
@@ -93,7 +94,7 @@ A = np.array(A)
 
 print(A)
 
-xin = np.linspace(x0, xn, n - 1)
+xin = np.linspace(x0, xn, n + 1)
 
 
 plt.plot(xi, fn(xi), 
@@ -128,3 +129,5 @@ plt.ylabel("f(x)", fontsize=12)
 plt.legend(fontsize=12)
 
 plt.grid()
+
+plt.show()
