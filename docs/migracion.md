@@ -1,6 +1,6 @@
 # Cambios de nombres y rutas
 
-Correspondencia actualizada al 25 de octubre de 2026: los 20 scripts de `main` se distribuyen por tema y se renombran en minúsculas, sin espacios ni acentos. Se añade `.py` a los tres archivos que carecen de extensión. El contenido de los scripts se conserva; las funciones internas mantienen sus nombres anteriores.
+Correspondencia actualizada al 25 de octubre de 2026: los 26 scripts de `main` se distribuyen por tema y se renombran en minúsculas, sin espacios ni acentos. Se añade `.py` a los cinco archivos que carecen de extensión. El contenido de los scripts se conserva; las funciones internas mantienen sus nombres anteriores.
 
 | Ruta anterior | Ruta nueva |
 | --- | --- |
@@ -8,6 +8,7 @@ Correspondencia actualizada al 25 de octubre de 2026: los 20 scripts de `main` s
 | `Bisection.py` | [raices/biseccion.py](../raices/biseccion.py) |
 | `Regla_Falsa` | [raices/regla_falsa.py](../raices/regla_falsa.py) |
 | `Newton_Raphson.py` | [raices/newton_raphson.py](../raices/newton_raphson.py) |
+| `NR_Modificado` | [raices/newton_raphson_modificado.py](../raices/newton_raphson_modificado.py) |
 | `M_secante.py` | [raices/secante.py](../raices/secante.py) |
 | `punto_fijo.py` | [raices/punto_fijo.py](../raices/punto_fijo.py) |
 | `Eliminacion_Gaussiana.py` | [sistemas_lineales/eliminacion_gaussiana.py](../sistemas_lineales/eliminacion_gaussiana.py) |
@@ -15,6 +16,7 @@ Correspondencia actualizada al 25 de octubre de 2026: los 20 scripts de `main` s
 | `Factorizacion_LU` | [sistemas_lineales/factorizacion_lu.py](../sistemas_lineales/factorizacion_lu.py) |
 | `Matriz_Inversa.py` | [sistemas_lineales/matriz_inversa.py](../sistemas_lineales/matriz_inversa.py) |
 | `Metodo_de_Jacobi.py` | [sistemas_lineales/jacobi.py](../sistemas_lineales/jacobi.py) |
+| `Regla_Cramer` | [sistemas_lineales/cramer.py](../sistemas_lineales/cramer.py) |
 | `Int_Lineal.py` | [interpolacion/lineal.py](../interpolacion/lineal.py) |
 | `Int_Cuadratica.py` | [interpolacion/cuadratica.py](../interpolacion/cuadratica.py) |
 | `Diferenciación_numérica.py` | [diferenciacion/diferencias_finitas.py](../diferenciacion/diferencias_finitas.py) |
@@ -22,6 +24,10 @@ Correspondencia actualizada al 25 de octubre de 2026: los 20 scripts de `main` s
 | `Simpson3_8.py` | [integracion/simpson_3_8.py](../integracion/simpson_3_8.py) |
 | `Simpson_1_3.py` | [integracion/simpson_1_3.py](../integracion/simpson_1_3.py) |
 | `Metodo_de_Euler` | [edo/euler.py](../edo/euler.py) |
+| `Barra.py` | [elementos_finitos/conduccion_barra_1d.py](../elementos_finitos/conduccion_barra_1d.py) |
+| `Barra_F.py` | [edp/calor_1d_fourier.py](../edp/calor_1d_fourier.py) |
+| `Placa_DF.py` | [edp/laplace_2d_diferencias_finitas.py](../edp/laplace_2d_diferencias_finitas.py) |
+| `Placa_F.py` | [edp/laplace_2d_fourier.py](../edp/laplace_2d_fourier.py) |
 | `S_Fourier.py` | [fourier/serie_fourier.py](../fourier/serie_fourier.py) |
 | `Sistema Masa-Resorte.py` | [aplicaciones/masa_resorte_estatico.py](../aplicaciones/masa_resorte_estatico.py) |
 
