@@ -4,7 +4,7 @@ Ejemplos didácticos de métodos numéricos y matemáticas aplicadas a la ingeni
 
 **Autor:** Ángel A. Avitia N.
 
-El repositorio contiene **18 scripts**, organizados en ocho áreas. Algunos desarrollan el algoritmo con ciclos y operaciones elementales; otros muestran aplicaciones de NumPy, SciPy o SymPy. El índice distingue ambos casos.
+El repositorio contiene **20 scripts**, organizados en nueve áreas. Algunos desarrollan el algoritmo con ciclos y operaciones elementales; otros muestran aplicaciones de NumPy, SciPy o SymPy. El índice distingue ambos casos. Inventario actualizado el **25 de octubre de 2026**.
 
 ## Instalación
 
@@ -41,7 +41,8 @@ python -m pip install -r requirements.txt
 | [sistemas_lineales](sistemas_lineales/) | Métodos directos e iterativos | 5 |
 | [interpolacion](interpolacion/) | Interpolación con SciPy | 2 |
 | [diferenciacion](diferenciacion/) | Diferencias finitas | 1 |
-| [integracion](integracion/) | Cuadratura numérica | 2 |
+| [integracion](integracion/) | Cuadratura numérica | 3 |
+| [edo](edo/) | Ecuaciones diferenciales ordinarias | 1 |
 | [fourier](fourier/) | Coeficientes y sumas parciales de Fourier | 1 |
 | [aplicaciones](aplicaciones/) | Modelo estático de masa y resortes | 1 |
 | [docs](docs/) | Pendientes, revisión técnica y cambios de rutas | — |
@@ -65,9 +66,11 @@ python -m pip install -r requirements.txt
 | Sistemas lineales | [jacobi.py](sistemas_lineales/jacobi.py) | Jacobi con tabla y errores porcentuales | Algoritmo propio |
 | Interpolación | [lineal.py](interpolacion/lineal.py) | Interpolación lineal de `ln(x)` | `scipy.interpolate.interp1d` |
 | Interpolación | [cuadratica.py](interpolacion/cuadratica.py) | Interpolación cuadrática de `ln(x)` | `scipy.interpolate.interp1d` |
-| Diferenciación | [diferencias_finitas.py](diferenciacion/diferencias_finitas.py) | Primera derivada hacia adelante, atrás y centrada | Algoritmo propio |
-| Integración | [trapecio.py](integracion/trapecio.py) | Regla compuesta del trapecio | Algoritmo propio |
+| Diferenciación | [diferencias_finitas.py](diferenciacion/diferencias_finitas.py) | Primera derivada de `exp(x)*sin(x)`: diferencias hacia adelante, atrás y centrada | Algoritmo propio + SymPy |
+| Integración | [trapecio.py](integracion/trapecio.py) | Trapecio compuesto con refinamiento uniforme, tabla y errores | Algoritmo propio |
+| Integración | [simpson_1_3.py](integracion/simpson_1_3.py) | Simpson 1/3 compuesto con refinamiento uniforme, tabla y errores | Algoritmo propio |
 | Integración | [simpson_3_8.py](integracion/simpson_3_8.py) | Regla compuesta de Simpson 3/8 | Algoritmo propio |
+| EDO | [euler.py](edo/euler.py) | Euler explícito para `y' = (x**2 - 1)/y**2`, con comparación analítica | Algoritmo propio |
 | Fourier | [serie_fourier.py](fourier/serie_fourier.py) | Coeficientes y suma parcial de `exp(x)` en `[-pi, pi]` | Integración simbólica con SymPy |
 | Aplicaciones | [masa_resorte_estatico.py](aplicaciones/masa_resorte_estatico.py) | Desplazamientos de equilibrio mediante `K x = W` | Inversa con SciPy |
 
@@ -78,6 +81,8 @@ Desde la raíz del repositorio:
 ```bash
 python sistemas_lineales/jacobi.py
 python interpolacion/lineal.py
+python edo/euler.py
+python integracion/simpson_1_3.py
 ```
 
 Los datos del problema se editan dentro de cada archivo. Los scripts conservan su desarrollo didáctico original y ejecutan sus ejemplos al cargarse; todavía no constituyen una biblioteca con una interfaz común.
@@ -106,7 +111,7 @@ Para regla falsa, cambia la ruta por `raices/regla_falsa.py`. Ejecutar esos arch
 
 ## Métodos que faltan
 
-Las prioridades para ampliar el curso son **análisis de errores, Gauss–Seidel, Simpson 1/3, interpolación de Lagrange y Newton, Cholesky, QR, Euler y Runge–Kutta de cuarto orden**. Consulta la [lista completa de métodos pendientes](docs/metodos_pendientes.md), que también incluye extensiones a EDP, elementos finitos y análisis de señales.
+Las prioridades para ampliar el curso son **análisis de errores, Gauss–Seidel, interpolación de Lagrange y Newton, Cholesky, QR, Heun y Runge–Kutta de cuarto orden**. **Euler y Simpson 1/3 ya están implementados.** Consulta la [lista completa de métodos pendientes](docs/metodos_pendientes.md), que también incluye extensiones a EDP, elementos finitos y análisis de señales.
 
 Gauss–Seidel aparecía en el README anterior, pero no se encontró su implementación. El ejemplo masa–resorte resuelve equilibrio estático; no implementa integración temporal de la dinámica.
 
@@ -116,4 +121,4 @@ Gauss–Seidel aparecía en el README anterior, pero no se encontró su implemen
 - [Limitaciones y verificación del código actual](docs/revision_tecnica.md).
 - [Correspondencia entre nombres anteriores y rutas nuevas](docs/migracion.md).
 
-La reorganización conserva el contenido de los 18 scripts. Los nombres de archivo se unificaron en minúsculas, sin espacios ni acentos, y todos terminan en `.py`.
+La reorganización conserva el contenido de los 20 scripts de `main` revisados el 25 de octubre. Los nombres de archivo se unificaron en minúsculas, sin espacios ni acentos, y todos terminan en `.py`.

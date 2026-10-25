@@ -1,73 +1,68 @@
 import numpy as np
+import sympy as sp
 import matplotlib.pyplot as plt
 
-# Funcion
-def f(x):
-    return x**3
+# Variable, función y derivada simbólicas
+x = sp.Symbol('x')
 
-# Derivada 
-def df(x):
-    return 3*x**2
+f = sp.exp(x) * sp.sin(x)
 
-# [xi-1,xi,xi+1]
+df = sp.diff(f, x)
 
-x = np.array([2.75,3,3.25])
+# Funcion y derivada numérica
+fn = sp.lambdify(x, f, 'numpy')
 
-h = x[2] - x[1]
+dfn = sp.lambdify(x, df, 'numpy')
 
+# intervalo de valores
+xn = np.linspace(0, 2, 100)
 
-def df_Adelante(f, x, h):
-    return (f(x[2]) - f(x[1]))/h
+# Paso
+h = 0.1
 
-def df_Atras(f, x, h):
-    return (f(x[1]) - f(x[0]))/h
+# Diferencias finitas
 
-def df_Centro(f, x, h):
-    return (f(x[2]) - f(x[0]))/(2*h)
+def DF_Adelante(f, xn, h):
+    return (f(xn + h) - f(xn)) / h
 
+def DF_Atras(f, xn, h):
+    return (f(xn) - f(xn - h)) / h
 
-xi = np.linspace(1, 5,100)
+def DF_Centrada(f, xn, h):
+    return (f(xn + h) - f(xn - h)) / (2*h)
 
-def df_n(f, x, h):
-    return (f(x + h) - f(x - h))/(2*h)
+# Diferencias finitas evaluadas
+DFAd = DF_Adelante(fn, xn, h)
 
-fi = f(xi)
+DFAt = DF_Atras(fn, xn, h)
 
+DFC = DF_Centrada(fn, xn, h)
 
-dfi = df(xi)
+# graficas
+plt.plot(xn, fn(xn), color='blue',
+         label=r'$f(x)=e^x\sin(x)$')
 
-df_a = df_Adelante(f, x, h)
+plt.plot(xn, dfn(xn), color='black',
+         label=r"$f'(x)=e^x[\sin(x)+\cos(x)]$")
 
-df_at = df_Atras(f, x, h)
+plt.plot(xn, DFAd, '--', color='red',
+         label=r"$ f'(x_i) \approx \frac{f(x_i + h) - f(x_i)}{h}$")
 
-df_c = df_Centro(f, x, h)
+plt.plot(xn, DFC, '--', color='orange',
+         label=r"$ f'(x_i) \approx \frac{f(x_i) - f(x_i - h)}{h}$")
 
-dfn = df_n(f, xi, h)
+plt.plot(xn, DFAt, '--', color='green',
+         label=r"$ f'(x_i) \approx \frac{f(x_i + h) - f(x_i - h)}{2h}$")
 
-print("Diferencia hacia delante =",df_a)
+# Etiquetas
 
-print("Diferencia hacia atras =",df_at)
+plt.xlabel('x')
 
-print("Diferencia centrada =",df_c)
+plt.ylabel('f(x)')
 
+plt.title('Diferenciación numérica', fontsize=20)
 
-df_n = np.array([df_a, df_at, df_c])
-
-plt.plot(xi, fi, label='f(x) = x^3')
-
-plt.plot(xi, dfi,  label='df(x) = 3 x^2')
-
-plt.scatter(x, df_n, color='r', label='Diferencias finitas')
-
-plt.plot(xi, dfn,'--', label='Diferenciacion Centrada')
-
-plt.title("Diferenciación Numérica")
-
-plt.xlabel("x")
-
-plt.ylabel("f(x)")
-
-plt.legend()
+plt.legend(fontsize=12)
 
 plt.grid()
 
