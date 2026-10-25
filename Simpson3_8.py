@@ -2,71 +2,131 @@ import numpy as np
 import sympy as sp
 import matplotlib.pyplot as plt
 
-x = sp.Symbol('x')
+# Variable y función simbólicas
+x = sp.symbols('x')
 
-f = x * sp.exp(-2*x)
+f = 2*x*sp.exp(-x**2) + x**3
 
-i = sp.integrate(f, (x, 0, 3)).evalf()
+# Límites de integración
+x0 = 0
+xn = 5
 
-print("f(x) =", f)
+# Iteraciones máximas
+ItMax = 100
 
-print("Integral Exacta =", i)
+# Integral exacta
+I = sp.integrate(f, (x, x0, xn)).evalf()
 
+# Función numérica
 fn = sp.lambdify(x, f, 'numpy')
 
-def Simpson_3_8(f, x0, xn, n):
 
-    h = (xn - x0)/n
-    x = np.linspace(x0, xn, n + 1)
+def Simpson_3_8(f, x0, xn,I, ItMax):
+
+    # Inicio con tres subintervalos
+    n = 3
     
-    S = f(x[0]) + f(x[n])
+    # Inicio de lista
+    A = [("n", "I", "et", "ea")]
     
-    for i in range(1, n):
-        if i % 3 == 0:
-            S = S + 2 * f(x[i])
+    # Inicio de valor anterior en cero
+    s_a = 0
+
+    for j in range(ItMax):
+
+        # Paso: n es multiplo de 3
+        h = (xn - x0)/n
+
+        # Inicio de sumatoria
+        S = f(x0) + f(xn)
+
+        for i in range(1, n):
+
+            # Cálculo de xi
+            xi = x0 + i*h
+
+            if i % 3 == 0:
+
+                # Suma de términos con índice par
+                S = S + 2*f(xi)
+
+            else:
+
+                # Suma de términos con índice impar
+                S = S + 3*f(xi)
+
+        for k in range(ItMax):
+            
+            et = abs((I - (3*h/8)*S)/I)*100
+            
+            
+        if s_a == 0:
+            
+            ea = np.nan
+            
         else:
-            S = S + 3 * f(x[i])
+            
+            ea = abs(((3*h/8)*S - s_a)/((3*h/8)*S))*100
+            
     
-    return (3*h/8) * S
+            
+        A.append((round(n,1),round(float((3*h/8)*S), 6),round(et, 4),round(float(ea), 4)))
+        
+        # Actualizar 
+        s_a = (3*h/8)*S
+        
+        if ea < 0.001:
+            
+            break
 
-n = 30
+        # Aumento en el número de subintervalos
+        n = n + 3
 
-I = Simpson_3_8(fn, 0, 3, n)
-
-print("Integral aproximada =", I)
-
-et = abs((i - I)/i)*100
-
-print("et =", et,"%")
+    return (3*h/8)*S, A,n
 
 
-# Gráfica
-xi = np.linspace(0, 3, 100)
+Is, A, n = Simpson_3_8(fn, x0, xn, I, ItMax)
 
-x2 = np.linspace(0, 3, n + 1)
+xi = np.linspace(x0, xn, 100)
 
-f2 = fn(x2)
+A = np.array(A)
 
-fi = fn(xi)
+print(A)
 
-plt.plot(xi, fi, label='f(x) = x e^(-2x)', color='b')
+xin = np.linspace(x0, xn, n + 1)
 
-plt.scatter(x2, f2, color='r', label="x_i")
 
-plt.vlines(x2, 0, f2, color='b', label='Secciones')
+plt.plot(xi, fn(xi), 
+         label=r'$f(x) = x^{3} + 2 x e^{- x^{2}}$',
+         color='black', lw=3)
 
-plt.fill_between(xi, fi, where=(xi >= 0) & (xi<= 3), color='g', alpha=0.7, label='Area')
+plt.axhline(0, color='gray')
 
-plt.axhline(0, color='k')
+plt.fill_between(xi, fn(xi), where=(xi >= x0) & (xi <= xn)
+                 , color='red', alpha=0.5, 
+                 label=r'$\int_{x_0}^{x_n} f(x) dx$')
 
-plt.title("Regla de Simpson 3/8")
+plt.fill_between(xin, fn(xin), where=(xin >= x0) & (xin <= xn),
+                 color='green', alpha=0.5, 
+                 label=r'$\frac{3 h}{8} \left[ f(x_0) + 3 \sum_{i = resto}^{n - 1} f(x_i) + 2 \sum_{j = Mult 3}^{n - 3} f(x_j)  + f(x_n)\right]$')
 
-plt.xlabel("x")
+plt.vlines(xin,0,  fn(xin),
+           color='blue', lw=1.5)
 
-plt.ylabel("f(x)")
+plt.scatter(xin, fn(xin),
+            color='blue', label=r'$f(x_i)$')
 
+plt.plot(xin, fn(xin),
+         color='blue', lw=1.5)
+
+plt.title("Regla de Simpson 3/8", fontsize=20)
+
+plt.xlabel("x", fontsize=12)
+
+plt.ylabel("f(x)", fontsize=12)
+
+plt.legend(fontsize=12)
 
 plt.grid()
 
-plt.legend()
-
+plt.show()
