@@ -1,6 +1,6 @@
 # Cambios de nombres y rutas
 
-Correspondencia actualizada al 25 de octubre de 2026: los 26 scripts de `main` se distribuyen por tema y se renombran en minúsculas, sin espacios ni acentos. Se añade `.py` a los cinco archivos que carecen de extensión. El contenido de los scripts se conserva; las funciones internas mantienen sus nombres anteriores.
+Correspondencia actualizada al 25 de octubre de 2026: los 27 scripts de `main` se distribuyen por tema y se renombran en minúsculas, sin espacios ni acentos. Se añade `.py` a los seis archivos que carecen de extensión. El contenido de los scripts se conserva; las funciones internas mantienen sus nombres anteriores.
 
 | Ruta anterior | Ruta nueva |
 | --- | --- |
@@ -23,6 +23,7 @@ Correspondencia actualizada al 25 de octubre de 2026: los 26 scripts de `main` s
 | `Regla_Trapecio.py` | [integracion/trapecio.py](../integracion/trapecio.py) |
 | `Simpson3_8.py` | [integracion/simpson_3_8.py](../integracion/simpson_3_8.py) |
 | `Simpson_1_3.py` | [integracion/simpson_1_3.py](../integracion/simpson_1_3.py) |
+| `Regla_Boole` | [integracion/boole.py](../integracion/boole.py) |
 | `Metodo_de_Euler` | [edo/euler.py](../edo/euler.py) |
 | `Barra.py` | [elementos_finitos/conduccion_barra_1d.py](../elementos_finitos/conduccion_barra_1d.py) |
 | `Barra_F.py` | [edp/calor_1d_fourier.py](../edp/calor_1d_fourier.py) |

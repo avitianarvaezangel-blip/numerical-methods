@@ -4,7 +4,7 @@ Ejemplos didácticos de métodos numéricos y matemáticas aplicadas a la ingeni
 
 **Autor:** Ángel A. Avitia N.
 
-El repositorio contiene **26 scripts**, organizados en once áreas. Algunos desarrollan el algoritmo con ciclos y operaciones elementales; otros muestran aplicaciones de NumPy, SciPy o SymPy. El índice distingue ambos casos. Inventario actualizado el **25 de octubre de 2026**.
+El repositorio contiene **27 scripts**, organizados en once áreas. Algunos desarrollan el algoritmo con ciclos y operaciones elementales; otros muestran aplicaciones de NumPy, SciPy o SymPy. El índice distingue ambos casos. Inventario actualizado el **25 de octubre de 2026**.
 
 ## Instalación
 
@@ -41,7 +41,7 @@ python -m pip install -r requirements.txt
 | [sistemas_lineales](sistemas_lineales/) | Métodos directos e iterativos | 6 |
 | [interpolacion](interpolacion/) | Interpolación con SciPy | 2 |
 | [diferenciacion](diferenciacion/) | Diferencias finitas | 1 |
-| [integracion](integracion/) | Cuadratura numérica | 3 |
+| [integracion](integracion/) | Cuadratura numérica | 4 |
 | [edo](edo/) | Ecuaciones diferenciales ordinarias | 1 |
 | [edp](edp/) | Calor y Laplace: diferencias finitas y series de Fourier | 3 |
 | [elementos_finitos](elementos_finitos/) | Conducción térmica en una barra 1D | 1 |
@@ -73,7 +73,8 @@ python -m pip install -r requirements.txt
 | Diferenciación | [diferencias_finitas.py](diferenciacion/diferencias_finitas.py) | Primera derivada de `exp(x)*sin(x)`: diferencias hacia adelante, atrás y centrada | Algoritmo propio + SymPy |
 | Integración | [trapecio.py](integracion/trapecio.py) | Trapecio compuesto con refinamiento uniforme, tabla y errores | Algoritmo propio |
 | Integración | [simpson_1_3.py](integracion/simpson_1_3.py) | Simpson 1/3 compuesto con refinamiento uniforme, tabla y errores | Algoritmo propio |
-| Integración | [simpson_3_8.py](integracion/simpson_3_8.py) | Regla compuesta de Simpson 3/8 | Algoritmo propio |
+| Integración | [simpson_3_8.py](integracion/simpson_3_8.py) | Simpson 3/8 compuesto con refinamiento uniforme, tabla y errores | Algoritmo propio |
+| Integración | [boole.py](integracion/boole.py) | Boole compuesta con múltiplos de cuatro subintervalos, tabla y errores | Algoritmo propio |
 | EDO | [euler.py](edo/euler.py) | Euler explícito para `y' = (x**2 - 1)/y**2`, con comparación analítica | Algoritmo propio |
 | EDP | [calor_1d_fourier.py](edp/calor_1d_fourier.py) | Calor 1D transitorio, extremos a cero e inicio a 100: cinco modos de Fourier | Coeficientes simbólicos + evaluación numérica |
 | EDP | [laplace_2d_diferencias_finitas.py](edp/laplace_2d_diferencias_finitas.py) | Laplace 2D: bordes superior e izquierdo a 100; esquema de cinco puntos con barridos Gauss–Seidel | Algoritmo propio |
@@ -91,6 +92,7 @@ python sistemas_lineales/jacobi.py
 python interpolacion/lineal.py
 python edo/euler.py
 python integracion/simpson_1_3.py
+python integracion/boole.py
 python sistemas_lineales/cramer.py
 python edp/laplace_2d_diferencias_finitas.py
 ```
@@ -125,7 +127,7 @@ Para regla falsa, cambia la ruta por `raices/regla_falsa.py`. Ejecutar esos arch
 
 Las prioridades para ampliar el curso son **análisis de errores, un solucionador general de Gauss–Seidel para `Ax = b`, interpolación de Lagrange y Newton, Cholesky, QR, Heun y Runge–Kutta de cuarto orden**. Consulta la [lista completa de métodos pendientes](docs/metodos_pendientes.md), que también incluye extensiones a EDP, elementos finitos y análisis de señales.
 
-Ya hay ejemplos de Euler, Simpson 1/3, Newton modificado, Cramer, conducción 1D por elementos finitos y soluciones de EDP. Gauss–Seidel está implementado dentro del barrido de la placa por diferencias finitas; todavía falta una función general para sistemas lineales. El ejemplo masa–resorte resuelve equilibrio estático; no implementa integración temporal de la dinámica.
+Ya hay ejemplos de Euler, trapecio, Simpson 1/3, Simpson 3/8, Boole, Newton modificado, Cramer, conducción 1D por elementos finitos y soluciones de EDP. Gauss–Seidel está implementado dentro del barrido de la placa por diferencias finitas; todavía falta una función general para sistemas lineales. El ejemplo masa–resorte resuelve equilibrio estático; no implementa integración temporal de la dinámica.
 
 ## Documentación
 
@@ -133,4 +135,4 @@ Ya hay ejemplos de Euler, Simpson 1/3, Newton modificado, Cramer, conducción 1D
 - [Limitaciones y verificación del código actual](docs/revision_tecnica.md).
 - [Correspondencia entre nombres anteriores y rutas nuevas](docs/migracion.md).
 
-La reorganización conserva el contenido de los 26 scripts de `main` revisados el 25 de octubre. Los nombres de archivo se unificaron en minúsculas, sin espacios ni acentos, y todos terminan en `.py`.
+La reorganización conserva el contenido de los 27 scripts de `main` revisados el 25 de octubre. Los nombres de archivo se unificaron en minúsculas, sin espacios ni acentos, y todos terminan en `.py`.

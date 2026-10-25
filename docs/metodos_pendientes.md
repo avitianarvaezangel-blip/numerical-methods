@@ -1,6 +1,6 @@
 # Métodos pendientes
 
-Inventario del código de la rama `main`, commit `642750b599618097bdcc2d6b9c5ccbd106e3cff5`, revisado el 25 de octubre de 2026. Se revisaron los 26 scripts disponibles, incluidos Newton modificado, Cramer, conducción 1D por elementos finitos y tres ejemplos de EDP. La reorganización conserva su contenido y no añade implementaciones de los métodos que aparecen como pendientes.
+Inventario del código de la rama `main`, commit `c01c7283dc88b2b4e2a990dd793564aa040f01bc`, revisado el 25 de octubre de 2026. Se revisaron los 27 scripts disponibles, incluida la regla de Boole y las versiones actuales de trapecio y Simpson. La reorganización conserva su contenido y no añade implementaciones de los métodos que aparecen como pendientes.
 
 La referencia de cobertura es un curso de métodos numéricos para ingeniería, con extensiones a simulación, elementos finitos y señales. La lista es una ruta de desarrollo; no todos los métodos avanzados son necesarios en un curso introductorio.
 
@@ -15,7 +15,7 @@ La referencia de cobertura es un curso de métodos numéricos para ingeniería, 
 | Interpolación | Ejemplos lineal y cuadrático mediante SciPy | Implementaciones propias de Lagrange, Newton con diferencias divididas y splines cúbicos | Alta |
 | Ajuste de datos | Sin ejemplos | Mínimos cuadrados lineales y polinómicos, preferentemente mediante QR | Media |
 | Diferenciación | Primera derivada hacia adelante, atrás y centrada | Segunda derivada; fórmulas de cinco puntos; extrapolación de Richardson | Media |
-| Integración | Trapecio compuesto, Simpson 1/3 compuesto y Simpson 3/8 compuesto | Romberg; cuadratura de Gauss–Legendre; integración adaptativa | Media |
+| Integración | Trapecio, Simpson 1/3, Simpson 3/8 y Boole compuestas, con refinamiento uniforme y tablas de error | Romberg; cuadratura de Gauss–Legendre; integración adaptativa local | Media |
 | EDO | Euler explícito para una EDO escalar | Heun; punto medio/RK2; RK4; sistemas de EDO; después Euler implícito y métodos multipaso | Alta |
 | EDP | Laplace 2D por diferencias finitas con Gauss–Seidel; calor 1D y Laplace 2D mediante series truncadas de Fourier | Calor 1D por diferencias finitas; Poisson 2D con término fuente; control de convergencia de Laplace; esquemas implícitos y Crank–Nicolson | Extensión de ingeniería |
 | Elementos finitos | Conducción 1D con ensamblaje de cuatro elementos y convección en un extremo | Generalizar malla, propiedades y condiciones de frontera; después triángulo CST y tetraedro | Extensión de ingeniería |
@@ -26,7 +26,7 @@ La referencia de cobertura es un curso de métodos numéricos para ingeniería, 
 ### Distinciones para interpretar el inventario
 
 - **LU ya está presente.** El script construye L con diagonal unitaria, como en Doolittle sin pivoteo. Lo pendiente es corregir y generalizar el manejo de permutaciones; no hace falta contar Doolittle como un método ausente.
-- **Euler y Simpson 1/3 ya están presentes.** La lista anterior los señalaba como ausentes. Euler resuelve un problema escalar; los sistemas de EDO y métodos de orden superior siguen pendientes. Simpson 1/3 y trapecio refinan uniformemente el número de subintervalos; no implementan refinamiento adaptativo local.
+- **Euler y cuatro reglas compuestas ya están presentes.** Euler resuelve un problema escalar; los sistemas de EDO y métodos de orden superior siguen pendientes. Trapecio, Simpson 1/3, Simpson 3/8 y Boole refinan uniformemente el número de subintervalos; no implementan refinamiento adaptativo local.
 - **Gauss–Seidel ya aparece en Laplace 2D.** La placa actualiza cada nodo en el mismo arreglo y usa los valores nuevos durante el barrido. Falta extraer una función general para `Ax = b` con residuo y criterio de paro; el ejemplo actual fija 500 barridos.
 - **Elementos finitos 1D ya tiene un ejemplo.** La barra ensambla matrices de cuatro elementos térmicos. No se debe seguir señalando conducción 1D como completamente ausente; lo pendiente es su generalización y la extensión a otras dimensiones.
 - **Newton modificado y Cramer ya están presentes.** Su generalización y limitaciones se describen en la revisión técnica.
