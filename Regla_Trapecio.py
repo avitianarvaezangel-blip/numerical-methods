@@ -80,13 +80,15 @@ def R_Trapecio(f, x0, xn, I, ItMax):
         
         # Actualzacion del valor anterior
         S_a = (h/2)*S
+        
+        # criterio de paro
+        if ea < 1:
+            
+            break
                 
         # Aumento en el numero de trapecios
         n = n + 1
         
-        if ea < 0.001:
-            
-            break
         
     return(h/2)*S, A, n
 
@@ -134,3 +136,5 @@ plt.ylabel("f(x)", fontsize=12)
 plt.legend(fontsize=12)
 
 plt.grid()
+
+plt.show()
