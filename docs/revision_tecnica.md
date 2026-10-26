@@ -1,6 +1,6 @@
 # Revisión técnica del código existente
 
-Revisión actualizada el 25 de octubre de 2026, sobre los 27 scripts de `main`, commit `c01c7283dc88b2b4e2a990dd793564aa040f01bc`. Incluye Boole y las versiones actuales de trapecio y Simpson, junto con los métodos, EDP y elementos finitos ya organizados.
+Revisión actualizada el 25 de octubre de 2026, sobre los 29 scripts recibidos en `main`, commit `a71389fd173e620d8799a4cb98ff50ddb60f342e`. Incluye los nuevos ejemplos de segunda derivada y derivadas parciales, junto con los métodos, EDP y elementos finitos ya organizados.
 
 ## Alcance de la reorganización
 
@@ -8,14 +8,17 @@ Se conservó el contenido de los scripts y se cambiaron sus rutas. Se añadieron
 
 ## Verificación realizada
 
-- Se conservan los resultados de los **23 ejemplos sin cambios** respecto de la actualización anterior, ejecutados el 25 de octubre con Matplotlib/Agg. Entre ellos se comprobaron raíces, sistemas lineales, interpolación, diferenciación, Euler, Taylor, Fourier, EDP y la barra por elementos finitos.
-- Se ejecutaron los **cuatro ejemplos de cuadratura nuevos o modificados**, también con Matplotlib/Agg: **4/4 completados sin excepciones**. Se verificó exactitud para todos los monomios hasta grado uno en trapecio, tres en Simpson 1/3 y 3/8, y cinco en Boole, con error numérico máximo menor que `1e-12`.
+- Se conservan los resultados de los **27 ejemplos sin cambios** respecto de la actualización anterior, ejecutados el 25 de octubre con Matplotlib/Agg. Entre ellos se comprobaron raíces, sistemas lineales, interpolación, diferenciación, cuadraturas, Euler, Taylor, Fourier, EDP y la barra por elementos finitos.
+- Se ejecutaron los **dos ejemplos nuevos de diferenciación**, también con Matplotlib/Agg: **2/2 completados sin excepciones**. Se verificaron sus fórmulas, la comparación con derivadas analíticas y la reducción del error al disminuir el paso. Se dibujaron también la figura de segunda derivada y las ocho superficies de derivadas parciales con el backend Agg.
+- En la revisión de integración se comprobó exactitud para todos los monomios hasta grado uno en trapecio, tres en Simpson 1/3 y 3/8, y cinco en Boole, con error numérico máximo menor que `1e-12`. Sus archivos permanecen sin cambios en esta actualización.
 - El residuo del sistema reducido de la barra fue aproximadamente `4.44e-15`; las series de calor y Laplace satisfacen sus respectivas EDP de forma simbólica. Para la placa por diferencias finitas se midió el residuo del esquema, que se detalla más adelante; completar 500 barridos no implica alcanzar cualquier tolerancia.
 - En las cuatro cuadraturas se verificó también que, al detenerse por tolerancia en los ejemplos actuales, `n` coincide con la última fila del historial y la gráfica usa `n + 1` nodos. Se comprobó por separado la salida cuando `ItMax = 1`; ese caso mantiene una inconsistencia que se describe más adelante.
 - Para Euler, comprobación de la malla y de resultados finitos del ejemplo; también se verificó la reducción de error de primer orden al reducir el paso en `y' = y`, `y(0) = 1`.
 - Para diferenciación, exactitud de la fórmula centrada sobre una cuadrática y menor error máximo que la fórmula hacia adelante en el ejemplo actual.
+- Para segunda derivada, las tres fórmulas reproducen la derivada de una cuadrática. En `exp(x)*sin(x)`, al reducir h de 0.1 a 0.05, el error máximo de la centrada se redujo por un factor aproximado de 3.9991; los factores de las fórmulas hacia adelante y atrás fueron aproximadamente 2.0794 y 1.9198.
+- Para derivadas parciales, las seis funciones reproducen las derivadas de una función lineal y las centradas reproducen las de una cuadrática con término cruzado. En `sin(x) + sin(y)`, el error máximo de las centradas con h = 0.1 fue aproximadamente `0.00166449` en ambas direcciones y disminuyó por un factor de 3.9985 al usar h = 0.05.
 - Conservación de los casos límite de raíces y sistemas lineales comprobados en las revisiones anteriores y detallados en la tabla siguiente. La observación sobre pasar un `n` inválido al antiguo Simpson 3/8 ya no aplica: su interfaz actual genera internamente múltiplos de tres.
-- Comparación de los 27 scripts con sus archivos de `main`: contenido idéntico byte por byte. Se verificaron también la sintaxis y los 73 enlaces locales de la documentación.
+- Comparación de los 29 scripts con sus archivos de origen en `main`: contenido idéntico byte por byte. Se verificaron también la sintaxis y los 77 enlaces locales de la documentación.
 
 Estas comprobaciones respaldan la ejecución de los ejemplos concretos. No constituyen una validación general para cualquier problema ni una revisión visual de todas las gráficas o animaciones.
 
@@ -65,7 +68,8 @@ Estas observaciones se obtuvieron al inspeccionar los scripts y conviene atender
 - **Criterios de paro y casos singulares.** Unificar tolerancias, máximo de iteraciones, residuo y estado de convergencia. Validar pivotes y denominadores, no solo los datos del ejemplo. Newton y secante pueden devolver `None`, aunque sus llamadas de demostración esperan dos resultados.
 - **Jacobi.** La función exige una solución de referencia para elaborar la tabla. Conviene hacerla opcional y tratar por separado el error cuando una componente de referencia vale cero. El error aproximado también necesita cuidado si la iteración nueva contiene ceros.
 - **LU y otros métodos directos.** Intercambiar filas solo cuando el pivote es exactamente cero no implementa pivoteo parcial. Conviene elegir el pivote por magnitud y comprobar el residuo de la solución.
-- **Diferenciación.** La versión actual calcula aproximaciones vectorizadas de la derivada de `exp(x)*sin(x)`. Las leyendas de las curvas `DFC` y `DFAt` están intercambiadas: la centrada lleva la fórmula hacia atrás y viceversa.
+- **Primera derivada (`diferencias_finitas.py`).** El ejemplo calcula aproximaciones vectorizadas de la derivada de `exp(x)*sin(x)`. Las leyendas de las curvas `DFC` y `DFAt` están intercambiadas: la centrada lleva la fórmula hacia atrás y viceversa. Esta observación corresponde únicamente al archivo de primera derivada.
+- **Segunda derivada y parciales.** Los nuevos archivos comparan fórmulas hacia adelante, atrás y centradas con una referencia simbólica. La segunda derivada usa `exp(x)*sin(x)`; el ejemplo de parciales usa `sin(x) + sin(y)` y presenta ocho superficies. El paso de diferenciación se define explícitamente y puede ser distinto del espaciado de los puntos usados para dibujar.
 - **Cuadraturas con refinamiento.** Las cuatro requieren la integral de referencia `I` para calcular el error verdadero; conviene hacerla opcional y tratar la referencia cero. El ciclo interno sobre `k` repite el mismo cálculo de error sin cambiar la aproximación. El incremento de n se hace después del criterio de paro: al converger se devuelve el n correcto, pero al agotar el máximo se devuelve el de la siguiente malla. También conviene validar que `ItMax` sea positivo y hacer configurable la tolerancia.
 - **Boole.** Los pesos de la fórmula compuesta y el incremento de cuatro subintervalos pasaron las pruebas polinómicas. El comentario que indica que n es múltiplo de tres debe decir múltiplo de cuatro; algunos comentarios de paridad también están invertidos.
 - **Área sombreada de Simpson y Boole.** `fill_between` sobre los nodos une los puntos mediante segmentos rectos. Ese sombreado representa trapecios, aunque el resultado numérico se obtiene con Simpson o Boole; para ilustrar esas reglas deben dibujarse sus interpolantes por bloques.

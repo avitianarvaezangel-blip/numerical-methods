@@ -1,6 +1,6 @@
 # Cambios de nombres y rutas
 
-Correspondencia actualizada al 25 de octubre de 2026: los 27 scripts de `main` se distribuyen por tema y se renombran en minúsculas, sin espacios ni acentos. Se añade `.py` a los seis archivos que carecen de extensión. El contenido de los scripts se conserva; las funciones internas mantienen sus nombres anteriores.
+Correspondencia actualizada al 25 de octubre de 2026: los 29 scripts recibidos en `main` se distribuyen por tema y se renombran en minúsculas, sin espacios ni acentos. Se añade `.py` a los ocho archivos que carecen de extensión. El contenido de los scripts se conserva; las funciones internas mantienen sus nombres anteriores.
 
 | Ruta anterior | Ruta nueva |
 | --- | --- |
@@ -20,6 +20,8 @@ Correspondencia actualizada al 25 de octubre de 2026: los 27 scripts de `main` s
 | `Int_Lineal.py` | [interpolacion/lineal.py](../interpolacion/lineal.py) |
 | `Int_Cuadratica.py` | [interpolacion/cuadratica.py](../interpolacion/cuadratica.py) |
 | `Diferenciación_numérica.py` | [diferenciacion/diferencias_finitas.py](../diferenciacion/diferencias_finitas.py) |
+| `Diferenciación_numérica_2da_Derivada` | [diferenciacion/segunda_derivada.py](../diferenciacion/segunda_derivada.py) |
+| `Diferenciacion_Parcial_Numerica` | [diferenciacion/derivadas_parciales.py](../diferenciacion/derivadas_parciales.py) |
 | `Regla_Trapecio.py` | [integracion/trapecio.py](../integracion/trapecio.py) |
 | `Simpson3_8.py` | [integracion/simpson_3_8.py](../integracion/simpson_3_8.py) |
 | `Simpson_1_3.py` | [integracion/simpson_1_3.py](../integracion/simpson_1_3.py) |
