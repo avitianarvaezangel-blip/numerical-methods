@@ -1,6 +1,6 @@
 # Métodos pendientes
 
-Inventario actualizado el 2 de noviembre de 2026 sobre la rama predeterminada `chore/organizacion-metodos-numericos` (base revisada para la última incorporación: `081569305f2ecb585c3079f340945d593b9179e1`). El repositorio contiene 37 scripts: se añadieron Crout, QR, Cholesky, Gauss–Seidel y gradiente conjugado en `sistemas_lineales`. Los 32 programas anteriores conservan su contenido; los métodos que aparecen como pendientes aún no se han implementado.
+Inventario actualizado el 2 de noviembre de 2026 sobre la rama predeterminada `chore/organizacion-metodos-numericos` (base revisada para la última incorporación: `b8ad2571f3a528bffb6d9917e65113db25c5621a`). El repositorio contiene 43 programas de Python, incluido `fourier/Fourier_Par_Impar`, que conserva su nombre sin extensión. Se añadieron cinco programas de Fourier: media onda, cuarto de onda par, cuarto de onda impar, obtención por diferenciación y transformada continua mediante integral impropia. Los 38 programas anteriores conservan su contenido; los métodos que aparecen como pendientes aún no se han implementado.
 
 La referencia de cobertura es un curso de métodos numéricos para ingeniería, con extensiones a simulación, elementos finitos y señales. La lista es una ruta de desarrollo; no todos los métodos avanzados son necesarios en un curso introductorio.
 
@@ -19,7 +19,7 @@ La referencia de cobertura es un curso de métodos numéricos para ingeniería, 
 | EDO | Euler explícito para una EDO escalar | Heun; punto medio/RK2; RK4; sistemas de EDO; después Euler implícito y métodos multipaso | Alta |
 | EDP | Laplace 2D por diferencias finitas con Gauss–Seidel; calor 1D y Laplace 2D mediante series truncadas de Fourier | Calor 1D por diferencias finitas; Poisson 2D con término fuente; control de convergencia de Laplace; esquemas implícitos y Crank–Nicolson | Extensión de ingeniería |
 | Elementos finitos | Conducción 1D con ensamblaje de cuatro elementos y convección en un extremo | Generalizar malla, propiedades y condiciones de frontera; después triángulo CST y tetraedro | Extensión de ingeniería |
-| Fourier y señales | Series trigonométrica y compleja de Fourier de una función; aplicaciones a calor 1D y Laplace 2D | DFT, FFT, espectro de señales muestreadas, convolución y comparación con bibliotecas | Extensión de ingeniería |
+| Fourier y señales | Series trigonométrica y compleja; simetrías par/impar, media onda y cuarto de onda par/impar; obtención de la serie por diferenciación; transformada continua por integral impropia; aplicaciones a calor 1D y Laplace 2D | DFT, FFT, espectro de señales muestreadas, convolución y comparación con bibliotecas | Extensión de ingeniería |
 | Autovalores | Sin métodos dedicados | Método de la potencia e iteración inversa; aplicación a modos de vibración | Ampliación |
 | Sistemas no lineales | Sin métodos multivariables | Newton para sistemas con Jacobiano y control del residuo | Ampliación |
 
@@ -34,7 +34,9 @@ La referencia de cobertura es un curso de métodos numéricos para ingeniería, 
 - **Elementos finitos 1D ya tiene un ejemplo.** La barra ensambla matrices de cuatro elementos térmicos. No se debe seguir señalando conducción 1D como completamente ausente; lo pendiente es su generalización y la extensión a otras dimensiones.
 - **Newton modificado y Cramer ya están presentes.** Su generalización y limitaciones se describen en la revisión técnica.
 - **Interpolación lineal y cuadrática sí tienen ejemplos.** Para practicar la construcción del algoritmo, faltan implementaciones propias de propósito general, además de Lagrange, Newton y splines.
-- **Las series trigonométrica y compleja de Fourier están presentes.** La versión compleja calcula `c_n` con `exp(-i*n*w0*x)` y suma `c_n*exp(i*n*w0*x)` de -N a N. Ambas usan `exp(x)` en `[-pi, pi]` y N = 20. También hay aplicaciones a EDP con coeficientes simbólicos y sumas finitas; la DFT, la FFT y la discretización temporal por diferencias finitas siguen pendientes.
+- **Las series y sus simetrías ya tienen ejemplos.** Además de las versiones trigonométrica y compleja de `exp(x)`, están el archivo original `Fourier_Par_Impar` y los tres programas de media onda y cuarto de onda. Los nuevos ejemplos construyen las extensiones correspondientes y usan solo armónicos impares. Cuarto de onda exige, además de paridad, simetría de media onda.
+- **La obtención por diferenciación está implementada.** Recupera los coeficientes de `x**2` desde los de sus derivadas y calcula el valor medio por separado. La segunda derivada periódica incorpora la delta del salto de la primera derivada.
+- **La transformada continua por integral impropia está presente.** El ejemplo usa `exp(-a*abs(x))`, con a positivo, y la convención `F(omega) = integral(f(x)*exp(-i*omega*x), -infinito, infinito)`. La DFT, la FFT y el procesamiento de señales muestreadas siguen pendientes. Las aplicaciones a EDP continúan siendo sumas de modos de Fourier; el calor por diferencias finitas temporales también sigue pendiente.
 - **El modelo masa–resorte es estático.** La matriz de rigidez se escribe directamente y se resuelve con SciPy. No implementa la dinámica, un integrador de EDO ni un procedimiento general de elementos finitos.
 - **Cardano es una solución algebraica.** Puede añadirse como referencia para validar raíces cúbicas, pero no es un método numérico iterativo faltante.
 

@@ -4,7 +4,7 @@ Ejemplos didácticos de métodos numéricos y matemáticas aplicadas a la ingeni
 
 **Autor:** Ángel A. Avitia N.
 
-El repositorio contiene **37 scripts**, organizados en once áreas. Algunos desarrollan el algoritmo con ciclos y operaciones elementales; otros muestran aplicaciones de NumPy, SciPy o SymPy. El índice distingue ambos casos. Inventario actualizado el **2 de noviembre de 2026**.
+El repositorio contiene **43 programas de Python**, organizados en once áreas. Algunos desarrollan el algoritmo con ciclos y operaciones elementales; otros muestran aplicaciones de NumPy, SciPy o SymPy. El índice distingue ambos casos. Inventario actualizado el **2 de noviembre de 2026**.
 
 ## Instalación
 
@@ -45,7 +45,7 @@ python -m pip install -r requirements.txt
 | [edo](edo/) | Ecuaciones diferenciales ordinarias | 1 |
 | [edp](edp/) | Calor y Laplace: diferencias finitas y series de Fourier | 3 |
 | [elementos_finitos](elementos_finitos/) | Conducción térmica en una barra 1D | 1 |
-| [fourier](fourier/) | Series trigonométrica y compleja de Fourier | 2 |
+| [fourier](fourier/) | Series, simetrías, diferenciación y transformada continua de Fourier | 8 |
 | [aplicaciones](aplicaciones/) | Modelo estático de masa y resortes | 1 |
 | [docs](docs/) | Pendientes, revisión técnica y cambios de rutas | — |
 
@@ -91,6 +91,12 @@ python -m pip install -r requirements.txt
 | Elementos finitos | [conduccion_barra_1d.py](elementos_finitos/conduccion_barra_1d.py) | Ensamblaje de cuatro elementos, temperatura prescrita y convección en el extremo | Ensamblaje propio + solución con NumPy |
 | Fourier | [serie_fourier.py](fourier/serie_fourier.py) | Coeficientes y suma parcial de `exp(x)` en `[-pi, pi]` | Integración simbólica con SymPy |
 | Fourier | [serie_compleja_fourier.py](fourier/serie_compleja_fourier.py) | Coeficientes complejos y suma de frecuencias de -20 a 20 de `exp(x)`, con gráfica comparativa | Integración simbólica con SymPy |
+| Fourier | [Fourier_Par_Impar](fourier/Fourier_Par_Impar) | Programa original de referencia: detección par/impar y serie de `x**2`; conserva su nombre sin extensión | Integración simbólica con SymPy |
+| Fourier | [serie_media_onda.py](fourier/serie_media_onda.py) | Extensión con simetría de media onda, integrales en medio periodo y armónicos impares de seno y coseno | SymPy + NumPy |
+| Fourier | [serie_cuarto_onda_par.py](fourier/serie_cuarto_onda_par.py) | Extensión par con simetría de media onda; coeficientes de coseno desde el primer cuarto | SymPy + NumPy |
+| Fourier | [serie_cuarto_onda_impar.py](fourier/serie_cuarto_onda_impar.py) | Onda triangular impar con simetría de media onda; coeficientes de seno desde el primer cuarto | SymPy + NumPy |
+| Fourier | [serie_por_diferenciacion.py](fourier/serie_por_diferenciacion.py) | Recuperación de la serie de `x**2` desde la primera y segunda derivadas periódicas, incluyendo la delta y el valor medio | SymPy + NumPy |
+| Fourier | [transformada_fourier_continua.py](fourier/transformada_fourier_continua.py) | Transformada de `exp(-a*abs(x))` por las integrales impropias sobre ambos semiejes, con a positivo | Integración simbólica con SymPy + NumPy |
 | Aplicaciones | [masa_resorte_estatico.py](aplicaciones/masa_resorte_estatico.py) | Desplazamientos de equilibrio mediante `K x = W` | Inversa con SciPy |
 
 ## Cómo ejecutar los ejemplos
@@ -115,6 +121,12 @@ python diferenciacion/tercera_derivada.py
 python diferenciacion/cuarta_derivada.py
 python diferenciacion/derivadas_parciales.py
 python fourier/serie_compleja_fourier.py
+python fourier/Fourier_Par_Impar
+python fourier/serie_media_onda.py
+python fourier/serie_cuarto_onda_par.py
+python fourier/serie_cuarto_onda_impar.py
+python fourier/serie_por_diferenciacion.py
+python fourier/transformada_fourier_continua.py
 ```
 
 Los datos del problema se editan dentro de cada archivo. Los scripts conservan su desarrollo didáctico original y ejecutan sus ejemplos al cargarse; todavía no constituyen una biblioteca con una interfaz común.

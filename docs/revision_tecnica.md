@@ -1,5 +1,25 @@
 # Revisión técnica del código existente
 
+## Simetrías, diferenciación y transformada de Fourier: 2 de noviembre de 2026
+
+Se tomó como referencia el archivo recién recibido [Fourier_Par_Impar](../fourier/Fourier_Par_Impar), que calcula la serie de `x**2`. Se conservó su contenido y su nombre sin extensión. Los cinco programas nuevos mantienen sus imports de NumPy, SymPy y Matplotlib, la impresión de coeficientes simplificados, la conversión con `lambdify` y las gráficas. Las cuatro series usan T = 2π y N = 5 como armónico máximo; en los tres ejemplos de simetría se incluyen solamente los índices 1, 3 y 5.
+
+| Programa | Función base y construcción | Coeficientes reducidos |
+| --- | --- | --- |
+| [serie_media_onda.py](../fourier/serie_media_onda.py) | `g(x) = x**2*(T/2-x)` en `[0,T/2]`, extendida mediante `f(x+T/2) = -f(x)`. El ejemplo tiene tanto senos como cosenos. | a₀ = 0; índices pares nulos; para n impar, aₙ y bₙ usan el factor `4/T` y una integral en media onda. |
+| [serie_cuarto_onda_par.py](../fourier/serie_cuarto_onda_par.py) | `g(x) = (T/4)**2-x**2` en `[0,T/4]`, extendida como función par con simetría de media onda. | a₀ y bₙ nulos; para n impar, `a_n = (8/T)*integral(g(x)*cos(n*w0*x), 0, T/4)`. |
+| [serie_cuarto_onda_impar.py](../fourier/serie_cuarto_onda_impar.py) | `g(x) = x` en `[0,T/4]`, reflejada y extendida como una onda triangular impar con simetría de media onda. | a₀ y aₙ nulos; para n impar, `b_n = (8/T)*integral(g(x)*sin(n*w0*x), 0, T/4)`. |
+
+Las extensiones se construyen explícitamente con `Piecewise`. Las fórmulas de cuarto de onda requieren simultáneamente paridad y simetría de media onda; no se deducen solo de ser par o impar. El primer ejemplo se eligió sin paridad para mostrar que media onda puede conservar coeficientes de ambas familias. Los coeficientes se definen con `Piecewise` para que los índices pares sean exactamente cero.
+
+[serie_por_diferenciacion.py](../fourier/serie_por_diferenciacion.py) obtiene la serie de `x**2` desde los coeficientes de f′: `a_n = -b_n(f')/(n*w0)` y `b_n = a_n(f')/(n*w0)`. El valor medio se integra por separado, ya que una derivada no lo determina. También recupera los coeficientes desde la segunda derivada periódica. En el periodo abierto `(0,2*pi)`, esta es `2 - 4*pi*DiracDelta(x-pi)`; el impulso queda dentro del intervalo y se cuenta una vez. Las dos vías dan `a0 = 2*pi**2/3`, `an = 4*(-1)**n/n**2` y `bn = 0`. La gráfica compara f y S, y f′ con la derivada de S; la delta se mantiene simbólica, sin representarla como una función ordinaria de altura finita.
+
+[transformada_fourier_continua.py](../fourier/transformada_fourier_continua.py) usa la definición `F(omega) = integral(f(x)*exp(-i*omega*x), -infinito, infinito)`, con frecuencia angular y sin factor de normalización. Para `f(x) = exp(-a*abs(x))`, a positivo, separa el valor absoluto en cero y evalúa las integrales impropias con SymPy. Se obtienen `1/(a-i*omega)` y `1/(a+i*omega)`, cuya suma es `2*a/(a**2+omega**2)`. Las hipótesis aseguran convergencia absoluta para toda frecuencia real; por eso se omiten las condiciones auxiliares del integrador. NumPy evalúa la expresión resultante y la gráfica muestra la función, la parte real y la parte imaginaria de su transformada. El parámetro de la demostración es a = 1.
+
+Se verificaron numéricamente las simetrías de las tres extensiones, con discrepancias máximas menores que `9e-15`. Para cada una se contrastaron a₀ y los coeficientes de índices 1 a 12 contra cuadratura independiente sobre el periodo completo; la discrepancia máxima fue menor que `1e-15`. También se comprobaron la anulación exacta de los índices pares y de la familia excluida por paridad, la suma parcial y la reducción del error máximo al pasar de N = 5 a N = 25.
+
+En diferenciación se verificaron simbólicamente ambas vías, el valor medio, el salto de f′ y que la integral de la segunda derivada periódica sea cero al incluir la delta. La transformada se contrastó con cuadratura impropia independiente para a = 0.5, 1 y 2.5 y cinco frecuencias negativas, cero y positivas; la diferencia máxima fue menor que `4e-14`. Se comprobaron además `F(0) = 2/a`, simetría conjugada y decaimiento en el infinito. Las cinco demostraciones se ejecutaron con Matplotlib/Agg y sus imágenes se inspeccionaron. Los 38 programas anteriores permanecen sin cambios; el total es de 43 programas, de los cuales 42 tienen extensión `.py`.
+
 ## Sistemas lineales: cinco incorporaciones del 2 de noviembre de 2026
 
 Se añadieron cinco programas independientes en `sistemas_lineales`, siguiendo el formato de los ejemplos existentes: matriz A y vector b editables, función con operaciones explícitas, solución de referencia con NumPy y salida didáctica. Los tres métodos directos imprimen los factores durante su construcción, resuelven por sustituciones y muestran los tres planos del sistema con su punto de intersección. Los dos iterativos usan el sistema 4×4 de Jacobi, una tabla con las aproximaciones, cambio relativo porcentual y residuo, y una gráfica de convergencia.
