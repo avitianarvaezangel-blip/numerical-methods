@@ -1,6 +1,6 @@
 # Métodos pendientes
 
-Inventario actualizado el 2 de noviembre de 2026 sobre la rama predeterminada `chore/organizacion-metodos-numericos` (base revisada para la última incorporación: `cb8050671fb628db8a8b22d06297b6130d3a3be4`). El repositorio contiene 31 scripts, incluidos los programas de tercera y cuarta derivadas con seis fórmulas cada uno. Los 30 programas anteriores a la cuarta derivada conservan su contenido; los métodos que aparecen como pendientes aún no se han implementado.
+Inventario actualizado el 2 de noviembre de 2026 sobre la rama predeterminada `chore/organizacion-metodos-numericos` (base revisada para la última incorporación: `ea6fdbb197d6711502c50a67980a9910fdd3fdec`). El repositorio contiene 32 scripts, incluidas las series trigonométrica y compleja de Fourier y los programas de tercera y cuarta derivadas con seis fórmulas cada uno. Los 31 programas anteriores a la serie compleja conservan su contenido; los métodos que aparecen como pendientes aún no se han implementado.
 
 La referencia de cobertura es un curso de métodos numéricos para ingeniería, con extensiones a simulación, elementos finitos y señales. La lista es una ruta de desarrollo; no todos los métodos avanzados son necesarios en un curso introductorio.
 
@@ -19,7 +19,7 @@ La referencia de cobertura es un curso de métodos numéricos para ingeniería, 
 | EDO | Euler explícito para una EDO escalar | Heun; punto medio/RK2; RK4; sistemas de EDO; después Euler implícito y métodos multipaso | Alta |
 | EDP | Laplace 2D por diferencias finitas con Gauss–Seidel; calor 1D y Laplace 2D mediante series truncadas de Fourier | Calor 1D por diferencias finitas; Poisson 2D con término fuente; control de convergencia de Laplace; esquemas implícitos y Crank–Nicolson | Extensión de ingeniería |
 | Elementos finitos | Conducción 1D con ensamblaje de cuatro elementos y convección en un extremo | Generalizar malla, propiedades y condiciones de frontera; después triángulo CST y tetraedro | Extensión de ingeniería |
-| Fourier y señales | Serie de Fourier de una función y aplicaciones a calor 1D y Laplace 2D | DFT, FFT, espectro de señales muestreadas, convolución y comparación con bibliotecas | Extensión de ingeniería |
+| Fourier y señales | Series trigonométrica y compleja de Fourier de una función; aplicaciones a calor 1D y Laplace 2D | DFT, FFT, espectro de señales muestreadas, convolución y comparación con bibliotecas | Extensión de ingeniería |
 | Autovalores | Sin métodos dedicados | Método de la potencia e iteración inversa; aplicación a modos de vibración | Ampliación |
 | Sistemas no lineales | Sin métodos multivariables | Newton para sistemas con Jacobiano y control del residuo | Ampliación |
 
@@ -34,7 +34,7 @@ La referencia de cobertura es un curso de métodos numéricos para ingeniería, 
 - **Elementos finitos 1D ya tiene un ejemplo.** La barra ensambla matrices de cuatro elementos térmicos. No se debe seguir señalando conducción 1D como completamente ausente; lo pendiente es su generalización y la extensión a otras dimensiones.
 - **Newton modificado y Cramer ya están presentes.** Su generalización y limitaciones se describen en la revisión técnica.
 - **Interpolación lineal y cuadrática sí tienen ejemplos.** Para practicar la construcción del algoritmo, faltan implementaciones propias de propósito general, además de Lagrange, Newton y splines.
-- **Las aplicaciones de Fourier a EDP están presentes.** Calculan coeficientes simbólicos y evalúan sumas finitas; no sustituyen una DFT o una FFT sobre muestras ni una discretización temporal por diferencias finitas.
+- **Las series trigonométrica y compleja de Fourier están presentes.** La versión compleja calcula `c_n` con `exp(-i*n*w0*x)` y suma `c_n*exp(i*n*w0*x)` de -N a N. Ambas usan `exp(x)` en `[-pi, pi]` y N = 20. También hay aplicaciones a EDP con coeficientes simbólicos y sumas finitas; la DFT, la FFT y la discretización temporal por diferencias finitas siguen pendientes.
 - **El modelo masa–resorte es estático.** La matriz de rigidez se escribe directamente y se resuelve con SciPy. No implementa la dinámica, un integrador de EDO ni un procedimiento general de elementos finitos.
 - **Cardano es una solución algebraica.** Puede añadirse como referencia para validar raíces cúbicas, pero no es un método numérico iterativo faltante.
 

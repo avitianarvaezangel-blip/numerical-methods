@@ -1,5 +1,15 @@
 # Revisión técnica del código existente
 
+## Serie compleja de Fourier: incorporación del 2 de noviembre de 2026
+
+Se añadió [serie_compleja_fourier.py](../fourier/serie_compleja_fourier.py) con el formato del ejemplo trigonométrico: función simbólica `exp(x)`, periodo `2*pi`, integración con SymPy, coeficientes simplificados, suma parcial, evaluación con NumPy y gráfica comparativa con Matplotlib. Usa N = 20, suma desde -N hasta N e incluye 41 términos. La gráfica muestra la parte real de la suma, y la consola informa el residuo imaginario.
+
+La convención es `c_n = (1/T)*integral(f(x)*exp(-i*n*w0*x))` en `[-T/2,T/2]`, con `w0 = 2*pi/T`, y la reconstrucción usa `c_n*exp(i*n*w0*x)`. Para este ejemplo se obtiene `c_0 = sinh(pi)/pi` y `c_n = (-1)**n*sinh(pi)*(1+i*n)/(pi*(1+n**2))`. El término cero se integra por separado para evitar sustituirlo en posibles singularidades removibles de la expresión general al cambiar la función.
+
+Se verificaron simbólicamente la expresión de `c_n`, el término cero y la simetría conjugada `c_(-n) = conjugado(c_n)`. Los 41 coeficientes se contrastaron con cuadratura numérica independiente, con una diferencia absoluta máxima aproximada de `2.0e-15`. En los 100 puntos de la gráfica, la suma compleja coincidió con la forma trigonométrica hasta `1.5e-14`, y el residuo imaginario máximo fue `7.8e-16`. También se generó e inspeccionó la gráfica.
+
+La extensión periódica de `exp(x)` tiene un salto en los extremos del intervalo: allí la serie converge al promedio de los límites, `cosh(pi)`. Las oscilaciones cercanas al salto corresponden al fenómeno de Gibbs. El archivo conserva esta observación junto a la gráfica. Los 31 programas anteriores permanecen sin cambios.
+
 ## Cuarta derivada: incorporación del 2 de noviembre de 2026
 
 Se añadió [cuarta_derivada.py](../diferenciacion/cuarta_derivada.py) con el mismo formato del programa de tercera derivada: `exp(x)*sin(x)`, derivada analítica con SymPy, seis funciones explícitas, 100 puntos en `[0,2]`, h = 0.1, tabla de errores absolutos máximos y gráfica con las fórmulas en la leyenda. La referencia analítica es `-4*exp(x)*sin(x)`.
