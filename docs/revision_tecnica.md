@@ -1,5 +1,23 @@
 # Revisión técnica del código existente
 
+## Capítulo 10 de EDO: incorporación del 2 de noviembre de 2026
+
+Se añadieron 19 programas en `edo`, conservando el formato y el contenido de [euler.py](../edo/euler.py). La [guía del capítulo 10](capitulo_10_edo.md) relaciona cada apartado de la imagen con un archivo y explicita las variantes elegidas: AB4, AM de orden cuatro y la familia RK2, con Ralston por defecto. Los programas escalares de paso fijo mantienen `y'=(x**2-1)/y**2`, `y(0)=2`, h = 0.2 y n = 10. Imprimen las aproximaciones y los errores, y muestran la solución exacta junto a la numérica. En sistemas se comparan ambas componentes y se evita dividir entre referencias nulas al informar errores relativos.
+
+Los métodos incorporados son Euler implícito con Newton, Euler modificado de Heun, punto medio, RK2, RK3, RK4, Adams–Bashforth, Adams–Moulton y predictor–corrector AB4–AM4. Los tres multipaso arrancan sus primeros tres pasos con RK4. Adams–Moulton resuelve su ecuación implícita por Newton; PECE usa una sola corrección y vuelve a evaluar la pendiente. Con mallas de menos de cuatro pasos solo se ejecuta el arranque disponible. Los integradores vectoriales cubren Euler, Heun y RK4, además de la reducción de una EDO de segundo orden a un sistema.
+
+Las secciones de rutinas de MATLAB se cubren mediante dos demostraciones de `scipy.integrate.solve_ivp` con RK45. Se distingue la malla de presentación `t_eval` de los pasos internos adaptativos y se comprueba el estado del solucionador. Los apartados restantes tienen programas propios: error local de Euler y RK2, RK4 con paso adaptativo por duplicación, estabilidad sobre el eje real negativo y una EDO rígida comparando Euler explícito, Euler implícito y Radau.
+
+Se ejecutaron las 19 demostraciones y se dibujaron e inspeccionaron sus gráficas con Matplotlib/Agg. Las referencias analíticas de la ecuación escalar, la EDO de segundo orden y el ejemplo rígido se verificaron simbólicamente. Se comprobaron los órdenes de convergencia global en `y'=y`, `y(0)=1`, sobre 40 y 80 pasos: aproximadamente 1.017 para Euler implícito, 1.986 para Heun, punto medio y RK2, 2.986 para RK3, 3.985 para RK4 y entre 3.80 y 3.92 para los tres esquemas multipaso de orden cuatro en estas mallas. La familia RK2 reprodujo exactamente las implementaciones separadas de Heun y punto medio al elegir sus parámetros.
+
+Los sistemas se contrastaron con un sistema diagonal de solución exponencial conocida y mostraron órdenes aproximados 0.960, 1.973 y 3.970 para Euler, Heun y RK4. También se revisaron tamaños de los arreglos, conservación de la condición inicial, n = 0, mallas cortas de arranque, funciones constantes y rechazos de paso o dimensiones inválidas. En el problema original, los residuos máximos de las ecuaciones discretas fueron aproximadamente `4.21e-13` para Euler implícito y `1.01e-16` para AM4.
+
+El integrador adaptativo llegó exactamente al extremo final, mantuvo tiempos crecientes y aceptó únicamente pasos cuya estimación local no excedía la tolerancia escalada; se probaron rechazos y agotamiento del máximo de intentos. Al reducir su tolerancia relativa de `1e-5` a `1e-8` en la exponencial, el error global observado bajó de `4.01e-5` a `1.59e-7`. Estos valores ilustran que una tolerancia local no certifica una cota global. El programa de error de truncamiento distingue la diferencia de un paso, sin dividir entre h, de los órdenes globales de los métodos.
+
+En el ejemplo rígido, h = 0.01 y lambda = 1000 dan magnitud de amplificación nueve para Euler explícito. Su error crece hasta aproximadamente `2.66e95`; Euler implícito permanece estable, pero su error máximo en la capa inicial es aproximadamente 0.091, frente a `2.62e-9` con Radau. La comparación separa estabilidad de precisión. Los métodos explícitos de paso fijo y AB4 no se presentan como solucionadores para rigidez.
+
+Los 47 programas anteriores permanecen sin cambios. El repositorio contiene ahora 66 programas, 64 con extensión `.py`, y 20 programas en `edo`. Los scripts son ejemplos didácticos de PVI reales con avance hacia adelante; no constituyen una biblioteca general con una interfaz unificada. Las condiciones de existencia, suavidad y estabilidad siguen dependiendo del problema.
+
 ## Monte Carlo e integrales múltiples e impropias: 2 de noviembre de 2026
 
 Se añadieron tres programas en `integracion`, con función simbólica, referencia exacta con SymPy, función numérica, tabla de resultados y gráfica. Se incorporó también al índice el archivo recién recibido `aplicaciones/Fractal_Newton`, conservando su contenido y su nombre sin extensión.

@@ -4,7 +4,7 @@ Ejemplos didácticos de métodos numéricos y matemáticas aplicadas a la ingeni
 
 **Autor:** Ángel A. Avitia N.
 
-El repositorio contiene **47 programas de Python**, organizados en once áreas. Algunos desarrollan el algoritmo con ciclos y operaciones elementales; otros muestran aplicaciones de NumPy, SciPy o SymPy. El índice distingue ambos casos. Inventario actualizado el **2 de noviembre de 2026**.
+El repositorio contiene **66 programas de Python**, organizados en once áreas. Algunos desarrollan el algoritmo con ciclos y operaciones elementales; otros muestran aplicaciones de NumPy, SciPy o SymPy. El índice distingue ambos casos. Inventario actualizado el **2 de noviembre de 2026**.
 
 ## Instalación
 
@@ -42,7 +42,7 @@ python -m pip install -r requirements.txt
 | [interpolacion](interpolacion/) | Interpolación con SciPy | 2 |
 | [diferenciacion](diferenciacion/) | Derivadas de primer a cuarto orden y derivadas parciales | 5 |
 | [integracion](integracion/) | Cuadraturas, Monte Carlo e integrales múltiples e impropias | 7 |
-| [edo](edo/) | Ecuaciones diferenciales ordinarias | 1 |
+| [edo](edo/) | Problemas de valor inicial: métodos del capítulo 10 | 20 |
 | [edp](edp/) | Calor y Laplace: diferencias finitas y series de Fourier | 3 |
 | [elementos_finitos](elementos_finitos/) | Conducción térmica en una barra 1D | 1 |
 | [fourier](fourier/) | Series, simetrías, diferenciación y transformada continua de Fourier | 8 |
@@ -88,6 +88,25 @@ python -m pip install -r requirements.txt
 | Integración | [integral_multiple.py](integracion/integral_multiple.py) | Integral doble en un rectángulo por Simpson 1/3 en ambas direcciones, tabla de refinamiento y superficie | Algoritmo propio + SymPy |
 | Integración | [integral_impropia.py](integracion/integral_impropia.py) | Integral de `1/(1+x**2)` de cero a infinito; comparación con límites finitos y referencia simbólica | `scipy.integrate.quad` + SymPy |
 | EDO | [euler.py](edo/euler.py) | Euler explícito para `y' = (x**2 - 1)/y**2`, con comparación analítica | Algoritmo propio |
+| EDO | [euler_implicito.py](edo/euler_implicito.py) | Euler implícito con Newton en cada paso | Algoritmo propio |
+| EDO | [euler_modificado.py](edo/euler_modificado.py) | Euler modificado de Heun | Algoritmo propio |
+| EDO | [punto_medio.py](edo/punto_medio.py) | Método explícito del punto medio | Algoritmo propio |
+| EDO | [runge_kutta_2.py](edo/runge_kutta_2.py) | Familia RK2; Ralston por defecto y parámetros para Heun o punto medio | Algoritmo propio |
+| EDO | [runge_kutta_3.py](edo/runge_kutta_3.py) | RK3 clásico de Kutta | Algoritmo propio |
+| EDO | [runge_kutta_4.py](edo/runge_kutta_4.py) | RK4 clásico de cuatro etapas | Algoritmo propio |
+| EDO | [adams_bashforth.py](edo/adams_bashforth.py) | Adams–Bashforth AB4 y arranque con RK4 | Algoritmo propio |
+| EDO | [adams_moulton.py](edo/adams_moulton.py) | Adams–Moulton de orden cuatro con Newton y arranque RK4 | Algoritmo propio |
+| EDO | [predictor_corrector.py](edo/predictor_corrector.py) | AB4–AM4 con una corrección PECE | Algoritmo propio |
+| EDO | [euler_sistemas.py](edo/euler_sistemas.py) | Euler explícito para sistemas | Algoritmo propio |
+| EDO | [euler_modificado_sistemas.py](edo/euler_modificado_sistemas.py) | Heun para sistemas | Algoritmo propio |
+| EDO | [runge_kutta_4_sistemas.py](edo/runge_kutta_4_sistemas.py) | RK4 para sistemas | Algoritmo propio |
+| EDO | [edo_orden_superior.py](edo/edo_orden_superior.py) | Reducción de una EDO de segundo orden a un sistema, resuelto con RK4 | Algoritmo propio |
+| EDO | [solve_ivp_escalar.py](edo/solve_ivp_escalar.py) | PVI escalar con RK45 adaptativo | SciPy |
+| EDO | [solve_ivp_sistemas.py](edo/solve_ivp_sistemas.py) | Sistema de EDO con RK45 adaptativo | SciPy |
+| EDO | [error_truncamiento.py](edo/error_truncamiento.py) | Error local de un paso en Euler y RK2 | Análisis numérico con NumPy |
+| EDO | [paso_adaptativo.py](edo/paso_adaptativo.py) | RK4 con control local de error por duplicación de pasos | Algoritmo propio |
+| EDO | [estabilidad.py](edo/estabilidad.py) | Factores de amplificación y prueba de estabilidad temporal | Algoritmo propio |
+| EDO | [edo_rigida.py](edo/edo_rigida.py) | Comparación de Euler explícito, implícito y Radau en una EDO rígida | Algoritmos propios + SciPy |
 | EDP | [calor_1d_fourier.py](edp/calor_1d_fourier.py) | Calor 1D transitorio, extremos a cero e inicio a 100: cinco modos de Fourier | Coeficientes simbólicos + evaluación numérica |
 | EDP | [laplace_2d_diferencias_finitas.py](edp/laplace_2d_diferencias_finitas.py) | Laplace 2D: bordes superior e izquierdo a 100; esquema de cinco puntos con barridos Gauss–Seidel | Algoritmo propio |
 | EDP | [laplace_2d_fourier.py](edp/laplace_2d_fourier.py) | Laplace en un cuadrado: borde superior a 100 y los otros tres a cero; diez modos de Fourier | Coeficientes simbólicos + evaluación numérica |
@@ -116,6 +135,11 @@ python sistemas_lineales/gauss_seidel.py
 python sistemas_lineales/gradiente_conjugado.py
 python interpolacion/lineal.py
 python edo/euler.py
+python edo/euler_modificado.py
+python edo/runge_kutta_4.py
+python edo/adams_bashforth.py
+python edo/runge_kutta_4_sistemas.py
+python edo/paso_adaptativo.py
 python integracion/simpson_1_3.py
 python integracion/boole.py
 python integracion/monte_carlo.py
@@ -164,16 +188,17 @@ Para regla falsa, cambia la ruta por `raices/regla_falsa.py`. Ejecutar esos arch
 
 ## Métodos que faltan
 
-Las prioridades para ampliar el curso son **análisis de errores, un solucionador general de Gauss–Seidel para `Ax = b`, interpolación de Lagrange y Newton, Cholesky, QR, Heun y Runge–Kutta de cuarto orden**. Consulta la [lista completa de métodos pendientes](docs/metodos_pendientes.md), que también incluye extensiones a EDP, elementos finitos y análisis de señales.
+Las prioridades para ampliar el curso son **análisis de errores, pivoteo y factorizaciones con permutaciones, interpolación de Lagrange y Newton, mínimos cuadrados, Romberg y Gauss–Legendre**. Consulta la [lista completa de métodos pendientes](docs/metodos_pendientes.md), que también incluye extensiones a EDP, elementos finitos y análisis de señales.
 
-Ya hay ejemplos de primeras, segundas, terceras y cuartas derivadas, derivadas parciales, Euler, trapecio, Simpson 1/3, Simpson 3/8, Boole, Newton modificado, Cramer, conducción 1D por elementos finitos y soluciones de EDP. Gauss–Seidel está implementado dentro del barrido de la placa por diferencias finitas; todavía falta una función general para sistemas lineales. El ejemplo masa–resorte resuelve equilibrio estático; no implementa integración temporal de la dinámica.
+Ya están implementados Gauss–Seidel general, gradiente conjugado, Crout, Cholesky y QR, además de las reglas de integración, diferenciación, Fourier, EDP y conducción 1D por elementos finitos. La carpeta `edo` cubre los métodos del capítulo 10 según la [correspondencia por apartado](docs/capitulo_10_edo.md). El archivo de masa–resorte conserva su modelo de equilibrio estático.
 
 ## Documentación
 
 - [Métodos pendientes y orden sugerido](docs/metodos_pendientes.md).
 - [Limitaciones y verificación del código actual](docs/revision_tecnica.md).
 - [Correspondencia entre nombres anteriores y rutas nuevas](docs/migracion.md).
+- [Capítulo 10: métodos de EDO y correspondencia por apartado](docs/capitulo_10_edo.md).
 
-Los 29 scripts recibidos en `main` y revisados el 25 de octubre conservan su contenido. Los programas de tercera y cuarta derivadas se añadieron el 2 de noviembre. Los nombres de archivo se unificaron en minúsculas, sin espacios ni acentos, y todos terminan en `.py`.
+Los 29 scripts recibidos en `main` y revisados el 25 de octubre conservan su contenido. Las incorporaciones posteriores están registradas en la revisión técnica. Los programas nuevos usan nombres en minúsculas, sin espacios ni acentos y con extensión `.py`; `Fourier_Par_Impar` y `Fractal_Newton` conservan los nombres originales sin extensión.
 
 Para mantener esta estructura, añade los nuevos ejemplos a su carpeta temática en la rama predeterminada y actualiza el índice y la lista de pendientes.
