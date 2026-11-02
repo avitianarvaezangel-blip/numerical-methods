@@ -4,7 +4,7 @@ Ejemplos didácticos de métodos numéricos y matemáticas aplicadas a la ingeni
 
 **Autor:** Ángel A. Avitia N.
 
-El repositorio contiene **43 programas de Python**, organizados en once áreas. Algunos desarrollan el algoritmo con ciclos y operaciones elementales; otros muestran aplicaciones de NumPy, SciPy o SymPy. El índice distingue ambos casos. Inventario actualizado el **2 de noviembre de 2026**.
+El repositorio contiene **47 programas de Python**, organizados en once áreas. Algunos desarrollan el algoritmo con ciclos y operaciones elementales; otros muestran aplicaciones de NumPy, SciPy o SymPy. El índice distingue ambos casos. Inventario actualizado el **2 de noviembre de 2026**.
 
 ## Instalación
 
@@ -41,12 +41,12 @@ python -m pip install -r requirements.txt
 | [sistemas_lineales](sistemas_lineales/) | Métodos directos e iterativos | 11 |
 | [interpolacion](interpolacion/) | Interpolación con SciPy | 2 |
 | [diferenciacion](diferenciacion/) | Derivadas de primer a cuarto orden y derivadas parciales | 5 |
-| [integracion](integracion/) | Cuadratura numérica | 4 |
+| [integracion](integracion/) | Cuadraturas, Monte Carlo e integrales múltiples e impropias | 7 |
 | [edo](edo/) | Ecuaciones diferenciales ordinarias | 1 |
 | [edp](edp/) | Calor y Laplace: diferencias finitas y series de Fourier | 3 |
 | [elementos_finitos](elementos_finitos/) | Conducción térmica en una barra 1D | 1 |
 | [fourier](fourier/) | Series, simetrías, diferenciación y transformada continua de Fourier | 8 |
-| [aplicaciones](aplicaciones/) | Modelo estático de masa y resortes | 1 |
+| [aplicaciones](aplicaciones/) | Modelo estático de masa y resortes y fractal de Newton | 2 |
 | [docs](docs/) | Pendientes, revisión técnica y cambios de rutas | — |
 
 ## Índice de métodos y ejemplos
@@ -84,6 +84,9 @@ python -m pip install -r requirements.txt
 | Integración | [simpson_1_3.py](integracion/simpson_1_3.py) | Simpson 1/3 compuesto con refinamiento uniforme, tabla y errores | Algoritmo propio |
 | Integración | [simpson_3_8.py](integracion/simpson_3_8.py) | Simpson 3/8 compuesto con refinamiento uniforme, tabla y errores | Algoritmo propio |
 | Integración | [boole.py](integracion/boole.py) | Boole compuesta con múltiplos de cuatro subintervalos, tabla y errores | Algoritmo propio |
+| Integración | [monte_carlo.py](integracion/monte_carlo.py) | Muestreo uniforme reproducible, promedio de muestras, error estándar e intervalo aproximado del 95% | Algoritmo propio + NumPy |
+| Integración | [integral_multiple.py](integracion/integral_multiple.py) | Integral doble en un rectángulo por Simpson 1/3 en ambas direcciones, tabla de refinamiento y superficie | Algoritmo propio + SymPy |
+| Integración | [integral_impropia.py](integracion/integral_impropia.py) | Integral de `1/(1+x**2)` de cero a infinito; comparación con límites finitos y referencia simbólica | `scipy.integrate.quad` + SymPy |
 | EDO | [euler.py](edo/euler.py) | Euler explícito para `y' = (x**2 - 1)/y**2`, con comparación analítica | Algoritmo propio |
 | EDP | [calor_1d_fourier.py](edp/calor_1d_fourier.py) | Calor 1D transitorio, extremos a cero e inicio a 100: cinco modos de Fourier | Coeficientes simbólicos + evaluación numérica |
 | EDP | [laplace_2d_diferencias_finitas.py](edp/laplace_2d_diferencias_finitas.py) | Laplace 2D: bordes superior e izquierdo a 100; esquema de cinco puntos con barridos Gauss–Seidel | Algoritmo propio |
@@ -98,6 +101,7 @@ python -m pip install -r requirements.txt
 | Fourier | [serie_por_diferenciacion.py](fourier/serie_por_diferenciacion.py) | Recuperación de la serie de `x**2` desde la primera y segunda derivadas periódicas, incluyendo la delta y el valor medio | SymPy + NumPy |
 | Fourier | [transformada_fourier_continua.py](fourier/transformada_fourier_continua.py) | Transformada de `exp(-a*abs(x))` por las integrales impropias sobre ambos semiejes, con a positivo | Integración simbólica con SymPy + NumPy |
 | Aplicaciones | [masa_resorte_estatico.py](aplicaciones/masa_resorte_estatico.py) | Desplazamientos de equilibrio mediante `K x = W` | Inversa con SciPy |
+| Aplicaciones | [Fractal_Newton](aplicaciones/Fractal_Newton) | Cuencas de atracción de Newton para `z**3-1` en el plano complejo; archivo original sin extensión | Algoritmo propio + NumPy |
 
 ## Cómo ejecutar los ejemplos
 
@@ -114,6 +118,9 @@ python interpolacion/lineal.py
 python edo/euler.py
 python integracion/simpson_1_3.py
 python integracion/boole.py
+python integracion/monte_carlo.py
+python integracion/integral_multiple.py
+python integracion/integral_impropia.py
 python sistemas_lineales/cramer.py
 python edp/laplace_2d_diferencias_finitas.py
 python diferenciacion/segunda_derivada.py
