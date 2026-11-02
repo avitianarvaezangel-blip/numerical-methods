@@ -1,6 +1,6 @@
 # Métodos pendientes
 
-Inventario actualizado el 2 de noviembre de 2026 sobre la rama predeterminada `chore/organizacion-metodos-numericos` (base revisada para la última incorporación: `ea6fdbb197d6711502c50a67980a9910fdd3fdec`). El repositorio contiene 32 scripts, incluidas las series trigonométrica y compleja de Fourier y los programas de tercera y cuarta derivadas con seis fórmulas cada uno. Los 31 programas anteriores a la serie compleja conservan su contenido; los métodos que aparecen como pendientes aún no se han implementado.
+Inventario actualizado el 2 de noviembre de 2026 sobre la rama predeterminada `chore/organizacion-metodos-numericos` (base revisada para la última incorporación: `081569305f2ecb585c3079f340945d593b9179e1`). El repositorio contiene 37 scripts: se añadieron Crout, QR, Cholesky, Gauss–Seidel y gradiente conjugado en `sistemas_lineales`. Los 32 programas anteriores conservan su contenido; los métodos que aparecen como pendientes aún no se han implementado.
 
 La referencia de cobertura es un curso de métodos numéricos para ingeniería, con extensiones a simulación, elementos finitos y señales. La lista es una ruta de desarrollo; no todos los métodos avanzados son necesarios en un curso introductorio.
 
@@ -10,8 +10,8 @@ La referencia de cobertura es un curso de métodos numéricos para ingeniería, 
 | --- | --- | --- | --- |
 | Errores y aritmética | Cálculos de error en algunos ejemplos; Taylor con SymPy | Ejemplos propios de redondeo, truncamiento, cifras significativas, cancelación, épsilon de máquina y propagación de errores | Alta |
 | Raíces de una variable | Bisección, regla falsa, punto fijo, Newton–Raphson, Newton modificado para raíces múltiples y secante | Brent para una alternativa robusta; Müller y Bairstow para ampliar a raíces polinómicas | Ampliación |
-| Sistemas lineales directos | Gauss, Gauss–Jordan, inversa, LU y Cramer | Pivoteo parcial sistemático y LU con permutaciones; Cholesky; QR; Thomas para sistemas tridiagonales | Alta |
-| Sistemas lineales iterativos | Jacobi; Gauss–Seidel en el barrido de Laplace 2D | Solucionador general de Gauss–Seidel para `Ax = b`; posteriormente SOR y gradiente conjugado | Alta para generalizar Gauss–Seidel; ampliación para SOR y gradiente conjugado |
+| Sistemas lineales directos | Gauss, Gauss–Jordan, inversa, LU, Crout, QR de Householder para sistemas cuadrados, Cholesky y Cramer | Pivoteo parcial sistemático y LU/Crout con permutaciones; Thomas para sistemas tridiagonales; QR rectangular para mínimos cuadrados | Alta para pivoteo y permutaciones |
+| Sistemas lineales iterativos | Jacobi; Gauss–Seidel general para `Ax = b` y en Laplace 2D; gradiente conjugado para matrices simétricas definidas positivas | SOR; precondicionamiento; soporte de matrices dispersas | Ampliación |
 | Interpolación | Ejemplos lineal y cuadrático mediante SciPy | Implementaciones propias de Lagrange, Newton con diferencias divididas y splines cúbicos | Alta |
 | Ajuste de datos | Sin ejemplos | Mínimos cuadrados lineales y polinómicos, preferentemente mediante QR | Media |
 | Diferenciación | Primera y segunda derivadas, seis fórmulas de tercera derivada, seis de cuarta derivada y primeras derivadas parciales en x e y | Fórmulas de cinco puntos para primera y segunda derivadas; extrapolación de Richardson; derivadas mixtas y Hessiano | Media |
@@ -25,12 +25,12 @@ La referencia de cobertura es un curso de métodos numéricos para ingeniería, 
 
 ### Distinciones para interpretar el inventario
 
-- **LU ya está presente.** El script construye L con diagonal unitaria, como en Doolittle sin pivoteo. Lo pendiente es corregir y generalizar el manejo de permutaciones; no hace falta contar Doolittle como un método ausente.
+- **LU, Crout, QR y Cholesky ya están presentes.** LU usa diagonal unitaria de L, como en Doolittle; Crout usa diagonal unitaria de U y no realiza pivoteo. QR desarrolla reflexiones de Householder para sistemas cuadrados, y Cholesky construye L para matrices reales simétricas definidas positivas. Siguen pendientes el manejo consistente de permutaciones y la extensión de QR a mínimos cuadrados rectangulares.
 - **Euler y cuatro reglas compuestas ya están presentes.** Euler resuelve un problema escalar; los sistemas de EDO y métodos de orden superior siguen pendientes. Trapecio, Simpson 1/3, Simpson 3/8 y Boole refinan uniformemente el número de subintervalos; no implementan refinamiento adaptativo local.
 - **La segunda derivada y las primeras derivadas parciales ya están presentes.** El ejemplo de segunda derivada usa `exp(x)*sin(x)`; el de parciales compara las aproximaciones de x e y para `sin(x) + sin(y)`. Las derivadas mixtas, segundas parciales y un Hessiano general siguen pendientes.
 - **La tercera derivada ya tiene seis fórmulas.** El nuevo programa usa diferencias hacia adelante y atrás de 4 puntos con error O(h), de 5 puntos con error O(h²), una centrada de 4 puntos con error O(h²) y una centrada de 6 puntos con error O(h⁴). Compara las seis con la derivada simbólica de `exp(x)*sin(x)`.
 - **La cuarta derivada también tiene seis fórmulas.** Incluye diferencias hacia adelante y atrás de 5 puntos con error O(h), de 6 puntos con error O(h²), una centrada de 5 puntos con error O(h²) y una centrada de 7 puntos con error O(h⁴). La centrada de 7 puntos corrige la errata de signo de la tabla de referencia: ambos términos vecinos llevan coeficiente -39.
-- **Gauss–Seidel ya aparece en Laplace 2D.** La placa actualiza cada nodo en el mismo arreglo y usa los valores nuevos durante el barrido. Falta extraer una función general para `Ax = b` con residuo y criterio de paro; el ejemplo actual fija 500 barridos.
+- **Gauss–Seidel y gradiente conjugado ya tienen programas propios.** Ambos devuelven solución, tabla y estado de convergencia, con paro por el residuo real `b - A @ x`. Gauss–Seidel admite matrices sin dominancia diagonal estricta, aunque su convergencia depende del sistema; gradiente conjugado requiere simetría y definición positiva. La aplicación de Gauss–Seidel a Laplace 2D continúa usando 500 barridos y aún necesita su propio criterio de paro.
 - **Elementos finitos 1D ya tiene un ejemplo.** La barra ensambla matrices de cuatro elementos térmicos. No se debe seguir señalando conducción 1D como completamente ausente; lo pendiente es su generalización y la extensión a otras dimensiones.
 - **Newton modificado y Cramer ya están presentes.** Su generalización y limitaciones se describen en la revisión técnica.
 - **Interpolación lineal y cuadrática sí tienen ejemplos.** Para practicar la construcción del algoritmo, faltan implementaciones propias de propósito general, además de Lagrange, Newton y splines.
@@ -43,10 +43,10 @@ La referencia de cobertura es un curso de métodos numéricos para ingeniería, 
 | Paso | Entregable | Forma de verificarlo |
 | ---: | --- | --- |
 | 1 | Análisis de errores y criterios de paro comunes | Comparar error absoluto, relativo y residuo; incluir referencia cero y cancelación numérica |
-| 2 | Gauss–Seidel general para `Ax = b` | Compararlo con Jacobi y `numpy.linalg.solve` en el sistema 4×4 del repositorio; medir también `norm(A @ x - b)` |
+| 2 | Pivoteo parcial y LU/Crout con permutaciones | Resolver un sistema que exige intercambio de filas y comprobar `P @ A = L @ U` con la convención elegida |
 | 3 | Lagrange y Newton por diferencias divididas | Verificar que reproducen cada dato y un polinomio conocido; detectar nodos repetidos |
-| 4 | Pivoteo parcial y LU con permutaciones | Resolver un sistema que exige intercambio de filas y comprobar `P @ A = L @ U` con la convención elegida |
-| 5 | Cholesky y QR | Comprobar `A = L @ L.T`, o `A = Q @ R` y `Q.T @ Q = I`, y resolver un problema conocido |
+| 4 | SOR y gradiente conjugado precondicionado | Comparar iteraciones y residuo con Gauss–Seidel y gradiente conjugado en sistemas adecuados; comprobar que el precondicionador sea compatible |
+| 5 | QR rectangular y mínimos cuadrados | Resolver un sistema sobredeterminado de rango completo y comprobar la ortogonalidad del residuo respecto de las columnas de A |
 | 6 | Heun, punto medio y RK4 | Comparar con Euler y una solución analítica; observar el error al reducir el paso |
 | 7 | Splines, mínimos cuadrados y diferenciación de orden superior | Usar datos con solución conocida y comparar con SciPy o derivadas analíticas |
 | 8 | Romberg y Gauss–Legendre | Comprobar convergencia y exactitud sobre polinomios conocidos |

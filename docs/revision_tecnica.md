@@ -1,5 +1,33 @@
 # Revisión técnica del código existente
 
+## Sistemas lineales: cinco incorporaciones del 2 de noviembre de 2026
+
+Se añadieron cinco programas independientes en `sistemas_lineales`, siguiendo el formato de los ejemplos existentes: matriz A y vector b editables, función con operaciones explícitas, solución de referencia con NumPy y salida didáctica. Los tres métodos directos imprimen los factores durante su construcción, resuelven por sustituciones y muestran los tres planos del sistema con su punto de intersección. Los dos iterativos usan el sistema 4×4 de Jacobi, una tabla con las aproximaciones, cambio relativo porcentual y residuo, y una gráfica de convergencia.
+
+| Archivo | Desarrollo y alcance |
+| --- | --- |
+| [factorizacion_crout.py](../sistemas_lineales/factorizacion_crout.py) | `A = L @ U`, con diagonal unitaria de U. No realiza pivoteo; detecta pivotes nulos o demasiado pequeños respecto de la escala de A y detiene el cálculo con un mensaje. |
+| [factorizacion_qr.py](../sistemas_lineales/factorizacion_qr.py) | Reflexiones de Householder, acumulación explícita de Q y solución de `R @ x = Q.T @ b`. Admite sistemas cuadrados de rango completo y detecta deficiencia numérica de rango. |
+| [factorizacion_cholesky.py](../sistemas_lineales/factorizacion_cholesky.py) | Construye L para `A = L @ L.T`, verifica simetría y exige pivotes positivos antes de calcular las raíces cuadradas. |
+| [gauss_seidel.py](../sistemas_lineales/gauss_seidel.py) | Usa las componentes actualizadas durante cada barrido; la dominancia diagonal estricta se informa como condición suficiente y no se exige como condición necesaria. |
+| [gradiente_conjugado.py](../sistemas_lineales/gradiente_conjugado.py) | Direcciones conjugadas con alpha y beta explícitos; recalcula el residuo `b - A @ x` en cada iteración. Requiere una matriz real simétrica definida positiva. |
+
+Gauss–Seidel y gradiente conjugado devuelven `(x, tabla, convergio)`. El paro usa `norm(b - A @ x, inf) / norm(b, inf) <= tol`; cuando b es nulo, se aplica la tolerancia al residuo absoluto. La aproximación inicial se registra en la tabla y puede satisfacer el criterio sin efectuar iteraciones. Si se agota `ItMax`, el estado de convergencia es falso. El cambio relativo `ea(%)` se calcula con normas infinito y no decide el paro; se marca como indefinido cuando el denominador es cero y el cambio no lo es. La solución de NumPy se usa únicamente para comparar al finalizar la demostración.
+
+La versión de gradiente conjugado es densa y sin precondicionamiento. Antes de iterar comprueba definición positiva con `numpy.linalg.cholesky`; ese factor no se usa para obtener x. Por tanto, esta comprobación añade un coste cúbico y el programa todavía no constituye una implementación para grandes sistemas dispersos. Las tres factorizaciones se desarrollan dentro de sus propias funciones, sin delegarlas a las rutinas de factorización de NumPy.
+
+Se comprobaron las identidades `A = L @ U`, `A = Q @ R`, `Q.T @ Q = I` y `A = L @ L.T`, la estructura triangular de los factores, la diagonal unitaria de U en Crout y las soluciones frente a NumPy. Se usaron matrices SPD de tamaños 1, 2, 4 y 8 con escalas `1e-10`, 1 y `1e10`, y matrices no simétricas de diagonal dominante de tamaños 2, 5 y 9 para los métodos aplicables. También se verificaron un sistema SPD sin dominancia diagonal estricta, aproximación inicial ya convergida, b nulo, componentes de solución nulas y agotamiento de iteraciones. Se probaron rechazos de dimensiones incompatibles, datos no finitos, tolerancias e iteraciones inválidas, matrices singulares y matrices fuera de las hipótesis de Cholesky o gradiente conjugado.
+
+| Ejemplo | Solución aproximada | Residuo infinito | Iteraciones |
+| --- | --- | ---: | ---: |
+| Crout | `[1, 2.2, 3.2]` | 0 en esta ejecución | — |
+| QR | `[1, 2.2, 3.2]` | `1.78e-15` | — |
+| Cholesky | `[1, 2, 3]` | `1.78e-15` | — |
+| Gauss–Seidel | `[1, 2, -1, 1]` | `2.06e-8` | 9 |
+| Gradiente conjugado | `[1, 2, -1, 1]` | `3.55e-15` | 4 |
+
+Ambos iterativos cumplieron `tol = 1e-8`: los residuos relativos fueron aproximadamente `8.26e-10` en Gauss–Seidel y `1.42e-16` en gradiente conjugado. Las cinco demostraciones se ejecutaron y sus gráficas se generaron e inspeccionaron con Matplotlib/Agg. Los 32 programas anteriores permanecen sin cambios, incluidas las limitaciones históricas del LU original que se detallan más adelante.
+
 ## Serie compleja de Fourier: incorporación del 2 de noviembre de 2026
 
 Se añadió [serie_compleja_fourier.py](../fourier/serie_compleja_fourier.py) con el formato del ejemplo trigonométrico: función simbólica `exp(x)`, periodo `2*pi`, integración con SymPy, coeficientes simplificados, suma parcial, evaluación con NumPy y gráfica comparativa con Matplotlib. Usa N = 20, suma desde -N hasta N e incluye 41 términos. La gráfica muestra la parte real de la suma, y la consola informa el residuo imaginario.

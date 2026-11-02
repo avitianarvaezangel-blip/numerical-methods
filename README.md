@@ -4,7 +4,7 @@ Ejemplos didácticos de métodos numéricos y matemáticas aplicadas a la ingeni
 
 **Autor:** Ángel A. Avitia N.
 
-El repositorio contiene **32 scripts**, organizados en once áreas. Algunos desarrollan el algoritmo con ciclos y operaciones elementales; otros muestran aplicaciones de NumPy, SciPy o SymPy. El índice distingue ambos casos. Inventario actualizado el **2 de noviembre de 2026**.
+El repositorio contiene **37 scripts**, organizados en once áreas. Algunos desarrollan el algoritmo con ciclos y operaciones elementales; otros muestran aplicaciones de NumPy, SciPy o SymPy. El índice distingue ambos casos. Inventario actualizado el **2 de noviembre de 2026**.
 
 ## Instalación
 
@@ -38,7 +38,7 @@ python -m pip install -r requirements.txt
 | --- | --- | ---: |
 | [fundamentos](fundamentos/) | Aproximación mediante Taylor | 1 |
 | [raices](raices/) | Ecuaciones no lineales de una variable | 6 |
-| [sistemas_lineales](sistemas_lineales/) | Métodos directos e iterativos | 6 |
+| [sistemas_lineales](sistemas_lineales/) | Métodos directos e iterativos | 11 |
 | [interpolacion](interpolacion/) | Interpolación con SciPy | 2 |
 | [diferenciacion](diferenciacion/) | Derivadas de primer a cuarto orden y derivadas parciales | 5 |
 | [integracion](integracion/) | Cuadratura numérica | 4 |
@@ -65,8 +65,13 @@ python -m pip install -r requirements.txt
 | Sistemas lineales | [eliminacion_gaussiana.py](sistemas_lineales/eliminacion_gaussiana.py) | Eliminación y sustitución hacia atrás | Algoritmo propio |
 | Sistemas lineales | [gauss_jordan.py](sistemas_lineales/gauss_jordan.py) | Reducción de la matriz aumentada | Algoritmo propio |
 | Sistemas lineales | [factorizacion_lu.py](sistemas_lineales/factorizacion_lu.py) | LU con diagonal unitaria de L y solución de `Ax = b` | Algoritmo propio |
+| Sistemas lineales | [factorizacion_crout.py](sistemas_lineales/factorizacion_crout.py) | Crout sin pivoteo, diagonal unitaria de U, sustituciones y gráfica de planos | Algoritmo propio |
+| Sistemas lineales | [factorizacion_qr.py](sistemas_lineales/factorizacion_qr.py) | QR mediante reflexiones de Householder, solución de un sistema cuadrado y gráfica de planos | Algoritmo propio |
+| Sistemas lineales | [factorizacion_cholesky.py](sistemas_lineales/factorizacion_cholesky.py) | Factorización `A = L @ L.T` para una matriz real simétrica definida positiva, sustituciones y gráfica de planos | Algoritmo propio |
 | Sistemas lineales | [matriz_inversa.py](sistemas_lineales/matriz_inversa.py) | Inversa mediante operaciones elementales | Algoritmo propio |
 | Sistemas lineales | [jacobi.py](sistemas_lineales/jacobi.py) | Jacobi con tabla y errores porcentuales | Algoritmo propio |
+| Sistemas lineales | [gauss_seidel.py](sistemas_lineales/gauss_seidel.py) | Solución de `Ax = b` con actualizaciones sucesivas, tabla, paro por residuo y gráfica de convergencia | Algoritmo propio |
+| Sistemas lineales | [gradiente_conjugado.py](sistemas_lineales/gradiente_conjugado.py) | Gradiente conjugado para matrices reales simétricas definidas positivas, tabla y gráfica de convergencia | Algoritmo propio + validación con NumPy |
 | Sistemas lineales | [cramer.py](sistemas_lineales/cramer.py) | Regla de Cramer mediante determinantes | Algoritmo propio + NumPy |
 | Interpolación | [lineal.py](interpolacion/lineal.py) | Interpolación lineal de `ln(x)` | `scipy.interpolate.interp1d` |
 | Interpolación | [cuadratica.py](interpolacion/cuadratica.py) | Interpolación cuadrática de `ln(x)` | `scipy.interpolate.interp1d` |
@@ -94,6 +99,11 @@ Desde la raíz del repositorio:
 
 ```bash
 python sistemas_lineales/jacobi.py
+python sistemas_lineales/factorizacion_crout.py
+python sistemas_lineales/factorizacion_qr.py
+python sistemas_lineales/factorizacion_cholesky.py
+python sistemas_lineales/gauss_seidel.py
+python sistemas_lineales/gradiente_conjugado.py
 python interpolacion/lineal.py
 python edo/euler.py
 python integracion/simpson_1_3.py
