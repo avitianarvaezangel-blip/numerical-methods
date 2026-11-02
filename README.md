@@ -4,7 +4,7 @@ Ejemplos didácticos de métodos numéricos y matemáticas aplicadas a la ingeni
 
 **Autor:** Ángel A. Avitia N.
 
-El repositorio contiene **30 scripts**, organizados en once áreas. Algunos desarrollan el algoritmo con ciclos y operaciones elementales; otros muestran aplicaciones de NumPy, SciPy o SymPy. El índice distingue ambos casos. Inventario actualizado el **2 de noviembre de 2026**.
+El repositorio contiene **31 scripts**, organizados en once áreas. Algunos desarrollan el algoritmo con ciclos y operaciones elementales; otros muestran aplicaciones de NumPy, SciPy o SymPy. El índice distingue ambos casos. Inventario actualizado el **2 de noviembre de 2026**.
 
 ## Instalación
 
@@ -40,7 +40,7 @@ python -m pip install -r requirements.txt
 | [raices](raices/) | Ecuaciones no lineales de una variable | 6 |
 | [sistemas_lineales](sistemas_lineales/) | Métodos directos e iterativos | 6 |
 | [interpolacion](interpolacion/) | Interpolación con SciPy | 2 |
-| [diferenciacion](diferenciacion/) | Primera, segunda y tercera derivadas y derivadas parciales | 4 |
+| [diferenciacion](diferenciacion/) | Derivadas de primer a cuarto orden y derivadas parciales | 5 |
 | [integracion](integracion/) | Cuadratura numérica | 4 |
 | [edo](edo/) | Ecuaciones diferenciales ordinarias | 1 |
 | [edp](edp/) | Calor y Laplace: diferencias finitas y series de Fourier | 3 |
@@ -73,6 +73,7 @@ python -m pip install -r requirements.txt
 | Diferenciación | [diferencias_finitas.py](diferenciacion/diferencias_finitas.py) | Primera derivada de `exp(x)*sin(x)`: diferencias hacia adelante, atrás y centrada | Algoritmo propio + SymPy |
 | Diferenciación | [segunda_derivada.py](diferenciacion/segunda_derivada.py) | Segunda derivada de `exp(x)*sin(x)`: tres fórmulas de diferencias finitas y comparación analítica | Algoritmo propio + SymPy |
 | Diferenciación | [tercera_derivada.py](diferenciacion/tercera_derivada.py) | Tercera derivada: adelante y atrás con 4 y 5 puntos, centradas con 4 y 6 puntos, gráfica y errores máximos | Algoritmo propio + SymPy |
+| Diferenciación | [cuarta_derivada.py](diferenciacion/cuarta_derivada.py) | Cuarta derivada: adelante y atrás con 5 y 6 puntos, centradas con 5 y 7 puntos, gráfica y errores máximos | Algoritmo propio + SymPy |
 | Diferenciación | [derivadas_parciales.py](diferenciacion/derivadas_parciales.py) | Derivadas respecto a x e y de `sin(x) + sin(y)`, con fórmulas hacia adelante, atrás y centradas y ocho superficies | Algoritmo propio + SymPy |
 | Integración | [trapecio.py](integracion/trapecio.py) | Trapecio compuesto con refinamiento uniforme, tabla y errores | Algoritmo propio |
 | Integración | [simpson_1_3.py](integracion/simpson_1_3.py) | Simpson 1/3 compuesto con refinamiento uniforme, tabla y errores | Algoritmo propio |
@@ -100,6 +101,7 @@ python sistemas_lineales/cramer.py
 python edp/laplace_2d_diferencias_finitas.py
 python diferenciacion/segunda_derivada.py
 python diferenciacion/tercera_derivada.py
+python diferenciacion/cuarta_derivada.py
 python diferenciacion/derivadas_parciales.py
 ```
 
@@ -133,7 +135,7 @@ Para regla falsa, cambia la ruta por `raices/regla_falsa.py`. Ejecutar esos arch
 
 Las prioridades para ampliar el curso son **análisis de errores, un solucionador general de Gauss–Seidel para `Ax = b`, interpolación de Lagrange y Newton, Cholesky, QR, Heun y Runge–Kutta de cuarto orden**. Consulta la [lista completa de métodos pendientes](docs/metodos_pendientes.md), que también incluye extensiones a EDP, elementos finitos y análisis de señales.
 
-Ya hay ejemplos de primeras, segundas y terceras derivadas, derivadas parciales, Euler, trapecio, Simpson 1/3, Simpson 3/8, Boole, Newton modificado, Cramer, conducción 1D por elementos finitos y soluciones de EDP. Gauss–Seidel está implementado dentro del barrido de la placa por diferencias finitas; todavía falta una función general para sistemas lineales. El ejemplo masa–resorte resuelve equilibrio estático; no implementa integración temporal de la dinámica.
+Ya hay ejemplos de primeras, segundas, terceras y cuartas derivadas, derivadas parciales, Euler, trapecio, Simpson 1/3, Simpson 3/8, Boole, Newton modificado, Cramer, conducción 1D por elementos finitos y soluciones de EDP. Gauss–Seidel está implementado dentro del barrido de la placa por diferencias finitas; todavía falta una función general para sistemas lineales. El ejemplo masa–resorte resuelve equilibrio estático; no implementa integración temporal de la dinámica.
 
 ## Documentación
 
@@ -141,6 +143,6 @@ Ya hay ejemplos de primeras, segundas y terceras derivadas, derivadas parciales,
 - [Limitaciones y verificación del código actual](docs/revision_tecnica.md).
 - [Correspondencia entre nombres anteriores y rutas nuevas](docs/migracion.md).
 
-Los 29 scripts recibidos en `main` y revisados el 25 de octubre conservan su contenido. El programa de tercera derivada se añadió el 2 de noviembre. Los nombres de archivo se unificaron en minúsculas, sin espacios ni acentos, y todos terminan en `.py`.
+Los 29 scripts recibidos en `main` y revisados el 25 de octubre conservan su contenido. Los programas de tercera y cuarta derivadas se añadieron el 2 de noviembre. Los nombres de archivo se unificaron en minúsculas, sin espacios ni acentos, y todos terminan en `.py`.
 
 Para mantener esta estructura, añade los nuevos ejemplos a su carpeta temática en la rama predeterminada y actualiza el índice y la lista de pendientes.

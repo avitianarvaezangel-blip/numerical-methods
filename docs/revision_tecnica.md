@@ -1,5 +1,24 @@
 # Revisión técnica del código existente
 
+## Cuarta derivada: incorporación del 2 de noviembre de 2026
+
+Se añadió [cuarta_derivada.py](../diferenciacion/cuarta_derivada.py) con el mismo formato del programa de tercera derivada: `exp(x)*sin(x)`, derivada analítica con SymPy, seis funciones explícitas, 100 puntos en `[0,2]`, h = 0.1, tabla de errores absolutos máximos y gráfica con las fórmulas en la leyenda. La referencia analítica es `-4*exp(x)*sin(x)`.
+
+| Fórmula | Orden de truncamiento |
+| --- | --- |
+| Adelante, 5 puntos | O(h) |
+| Adelante, 6 puntos | O(h²) |
+| Atrás, 5 puntos | O(h) |
+| Atrás, 6 puntos | O(h²) |
+| Centrada, 5 puntos | O(h²) |
+| Centrada, 7 puntos | O(h⁴) |
+
+**Errata de la imagen de referencia:** en la centrada de siete puntos aparece `+39*f(x_i+h)`; debe ser `-39*f(x_i+h)`. Con el signo positivo, la suma de coeficientes es 78, de modo que la fórmula devolvería `13/h**4` para la función constante 1, cuya cuarta derivada es cero. La fórmula implementada usa los coeficientes `[-1,12,-39,56,-39,12,-1]/6` sobre los desplazamientos `[-3,-2,-1,0,1,2,3]`, divididos entre h⁴. La corrección también está señalada junto a la función.
+
+Las seis fórmulas pasaron la verificación simbólica sobre monomios hasta el grado correspondiente a su orden y reprodujeron la cuarta derivada de una cuártica. Al reducir h de 0.1 a 0.05 con `exp(x)`, los órdenes observados fueron aproximadamente 1.081, 2.130, 0.924, 1.876, 2.001 y 4.004, en el orden de la tabla. Los coeficientes de la centrada de siete puntos se contrastaron además con los pesos de diferencias finitas generados por SymPy.
+
+Se verificaron la derivada analítica, la evaluación vectorizada y la generación de la gráfica; se inspeccionó la imagen para comprobar que las seis fórmulas sean visibles. Las expresiones suponen paso uniforme no nulo y una función suficientemente suave, definida en los puntos desplazados. La división entre h⁴ amplifica el efecto del redondeo cuando h es demasiado pequeño. Los 30 programas anteriores permanecen sin cambios.
+
 ## Tercera derivada: incorporación del 2 de noviembre de 2026
 
 Se añadió [tercera_derivada.py](../diferenciacion/tercera_derivada.py) junto a los otros programas de diferenciación. Mantiene la estructura de los ejemplos: función simbólica, derivada analítica con SymPy, funciones numéricas, fórmulas explícitas, evaluaciones y gráfica comparativa. Usa `exp(x)*sin(x)`, una malla de 100 puntos en `[0,2]` y h = 0.1. Imprime el error absoluto máximo de cada aproximación.

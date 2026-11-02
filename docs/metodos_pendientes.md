@@ -1,6 +1,6 @@
 # Métodos pendientes
 
-Inventario actualizado el 2 de noviembre de 2026 sobre la rama predeterminada `chore/organizacion-metodos-numericos` (base revisada: `b1b9c69ac18f9c8caee3ede4ea786584d0d8eb6a`). Se añadió un programa con las seis fórmulas de tercera derivada solicitadas, para un total de 30 scripts. Los 29 programas anteriores conservan su contenido; los métodos que aparecen como pendientes aún no se han implementado.
+Inventario actualizado el 2 de noviembre de 2026 sobre la rama predeterminada `chore/organizacion-metodos-numericos` (base revisada para la última incorporación: `cb8050671fb628db8a8b22d06297b6130d3a3be4`). El repositorio contiene 31 scripts, incluidos los programas de tercera y cuarta derivadas con seis fórmulas cada uno. Los 30 programas anteriores a la cuarta derivada conservan su contenido; los métodos que aparecen como pendientes aún no se han implementado.
 
 La referencia de cobertura es un curso de métodos numéricos para ingeniería, con extensiones a simulación, elementos finitos y señales. La lista es una ruta de desarrollo; no todos los métodos avanzados son necesarios en un curso introductorio.
 
@@ -14,7 +14,7 @@ La referencia de cobertura es un curso de métodos numéricos para ingeniería, 
 | Sistemas lineales iterativos | Jacobi; Gauss–Seidel en el barrido de Laplace 2D | Solucionador general de Gauss–Seidel para `Ax = b`; posteriormente SOR y gradiente conjugado | Alta para generalizar Gauss–Seidel; ampliación para SOR y gradiente conjugado |
 | Interpolación | Ejemplos lineal y cuadrático mediante SciPy | Implementaciones propias de Lagrange, Newton con diferencias divididas y splines cúbicos | Alta |
 | Ajuste de datos | Sin ejemplos | Mínimos cuadrados lineales y polinómicos, preferentemente mediante QR | Media |
-| Diferenciación | Primera y segunda derivadas, seis fórmulas de tercera derivada y primeras derivadas parciales en x e y | Fórmulas de cinco puntos para primera y segunda derivadas; extrapolación de Richardson; derivadas mixtas y Hessiano | Media |
+| Diferenciación | Primera y segunda derivadas, seis fórmulas de tercera derivada, seis de cuarta derivada y primeras derivadas parciales en x e y | Fórmulas de cinco puntos para primera y segunda derivadas; extrapolación de Richardson; derivadas mixtas y Hessiano | Media |
 | Integración | Trapecio, Simpson 1/3, Simpson 3/8 y Boole compuestas, con refinamiento uniforme y tablas de error | Romberg; cuadratura de Gauss–Legendre; integración adaptativa local | Media |
 | EDO | Euler explícito para una EDO escalar | Heun; punto medio/RK2; RK4; sistemas de EDO; después Euler implícito y métodos multipaso | Alta |
 | EDP | Laplace 2D por diferencias finitas con Gauss–Seidel; calor 1D y Laplace 2D mediante series truncadas de Fourier | Calor 1D por diferencias finitas; Poisson 2D con término fuente; control de convergencia de Laplace; esquemas implícitos y Crank–Nicolson | Extensión de ingeniería |
@@ -29,6 +29,7 @@ La referencia de cobertura es un curso de métodos numéricos para ingeniería, 
 - **Euler y cuatro reglas compuestas ya están presentes.** Euler resuelve un problema escalar; los sistemas de EDO y métodos de orden superior siguen pendientes. Trapecio, Simpson 1/3, Simpson 3/8 y Boole refinan uniformemente el número de subintervalos; no implementan refinamiento adaptativo local.
 - **La segunda derivada y las primeras derivadas parciales ya están presentes.** El ejemplo de segunda derivada usa `exp(x)*sin(x)`; el de parciales compara las aproximaciones de x e y para `sin(x) + sin(y)`. Las derivadas mixtas, segundas parciales y un Hessiano general siguen pendientes.
 - **La tercera derivada ya tiene seis fórmulas.** El nuevo programa usa diferencias hacia adelante y atrás de 4 puntos con error O(h), de 5 puntos con error O(h²), una centrada de 4 puntos con error O(h²) y una centrada de 6 puntos con error O(h⁴). Compara las seis con la derivada simbólica de `exp(x)*sin(x)`.
+- **La cuarta derivada también tiene seis fórmulas.** Incluye diferencias hacia adelante y atrás de 5 puntos con error O(h), de 6 puntos con error O(h²), una centrada de 5 puntos con error O(h²) y una centrada de 7 puntos con error O(h⁴). La centrada de 7 puntos corrige la errata de signo de la tabla de referencia: ambos términos vecinos llevan coeficiente -39.
 - **Gauss–Seidel ya aparece en Laplace 2D.** La placa actualiza cada nodo en el mismo arreglo y usa los valores nuevos durante el barrido. Falta extraer una función general para `Ax = b` con residuo y criterio de paro; el ejemplo actual fija 500 barridos.
 - **Elementos finitos 1D ya tiene un ejemplo.** La barra ensambla matrices de cuatro elementos térmicos. No se debe seguir señalando conducción 1D como completamente ausente; lo pendiente es su generalización y la extensión a otras dimensiones.
 - **Newton modificado y Cramer ya están presentes.** Su generalización y limitaciones se describen en la revisión técnica.
