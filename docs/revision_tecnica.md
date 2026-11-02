@@ -1,5 +1,24 @@
 # Revisión técnica del código existente
 
+## Tercera derivada: incorporación del 2 de noviembre de 2026
+
+Se añadió [tercera_derivada.py](../diferenciacion/tercera_derivada.py) junto a los otros programas de diferenciación. Mantiene la estructura de los ejemplos: función simbólica, derivada analítica con SymPy, funciones numéricas, fórmulas explícitas, evaluaciones y gráfica comparativa. Usa `exp(x)*sin(x)`, una malla de 100 puntos en `[0,2]` y h = 0.1. Imprime el error absoluto máximo de cada aproximación.
+
+| Fórmula | Orden de truncamiento |
+| --- | --- |
+| Adelante, 4 puntos | O(h) |
+| Adelante, 5 puntos | O(h²) |
+| Atrás, 4 puntos | O(h) |
+| Atrás, 5 puntos | O(h²) |
+| Centrada, 4 puntos | O(h²) |
+| Centrada, 6 puntos | O(h⁴) |
+
+Se verificó simbólicamente la exactitud de cada fórmula sobre todos los monomios hasta el grado correspondiente a su orden. Se comprobó el signo con la tercera derivada de una cúbica y el orden de convergencia al reducir h de 0.1 a 0.05 usando `exp(x)`: los órdenes observados fueron aproximadamente 1.062, 2.105, 0.942, 1.899, 2.001 y 4.002, en el orden de la tabla. También se comprobó la derivada analítica, la evaluación vectorizada y la generación de la gráfica; se inspeccionó la imagen para verificar que las seis fórmulas de la leyenda sean visibles.
+
+Las fórmulas suponen un paso uniforme no nulo y una función suficientemente suave, definida en todos los puntos desplazados. Los órdenes de truncamiento describen el comportamiento al reducir h antes de que predomine el redondeo; en las fórmulas de tercera derivada se divide entre h³. Los 29 programas anteriores permanecen sin cambios y conservan las verificaciones registradas a continuación.
+
+## Revisión de los 29 programas anteriores
+
 Revisión actualizada el 25 de octubre de 2026, sobre los 29 scripts recibidos en `main`, commit `a71389fd173e620d8799a4cb98ff50ddb60f342e`. Incluye los nuevos ejemplos de segunda derivada y derivadas parciales, junto con los métodos, EDP y elementos finitos ya organizados.
 
 ## Alcance de la reorganización
