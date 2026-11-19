@@ -1,0 +1,112 @@
+import numpy as np
+import sympy as sp
+import matplotlib.pyplot as plt
+
+# Variable simbólica
+t = sp.Symbol('t')
+
+# Función desconocida
+x = sp.Function('x')
+
+# Ecuación diferencial
+EDO = sp.Eq(
+    sp.diff(x(t), t, 2)
+    + 2*sp.diff(x(t), t)
+    + 5*x(t),
+    0
+)
+
+# Solución analítica: x(0) = 1 y x'(0) = 0
+S = sp.dsolve(
+    EDO,
+    x(t),
+    ics={
+        x(0): 1,
+        sp.diff(x(t), t).subs(t, 0): 0
+    }
+)
+
+print(S)
+
+# Expresión simbólica y función numérica
+z = S.rhs
+zn = sp.lambdify(t, z, 'numpy')
+
+# Número de pasos
+n = 100
+
+# Condiciones iniciales
+t0 = 0
+x0 = 1
+v0 = 0
+
+
+# Derivada del desplazamiento
+def f(t, x, v):
+    return v
+
+
+# Derivada de la velocidad (aceleración)
+def g(t, x, v):
+    return -2*v - 5*x
+
+
+def Euler(f, g, t0, x0, v0, n):
+    
+    # Tamaño de paso
+    h = 0.1
+
+
+    t = np.zeros(n + 1)
+    x = np.zeros(n + 1)
+    v = np.zeros(n + 1)
+
+    t[0] = t0
+    x[0] = x0
+    v[0] = v0
+
+    for i in range(n):
+
+        t[i + 1] = t[i] + h
+
+        x[i + 1] = x[i] + f(t[i], x[i], v[i])*h
+
+        v[i + 1] = v[i] + g(t[i], x[i], v[i])*h
+
+    return t, x, v
+
+
+T, X, V = Euler(f, g, t0, x0, v0, n)
+
+print("Tiempo:")
+print(T)
+
+print("Desplazamiento:")
+print(X)
+
+print("Velocidad:")
+print(V)
+
+# Puntos para graficar la solución analítica
+ti = np.linspace(0, 10, 500)
+
+#plt.figure(figsize=(10, 6))
+
+plt.plot(
+    ti, zn(ti),
+    label=r'$x(t)=e^{-t}\left(\cos(2t)+\frac{1}{2}\sin(2t)\right)$'
+)
+
+plt.scatter(T, X, color='r')
+
+plt.plot(T, X, color='r', label=r'$ v_{i + 1} = v_i + (-2 v_i - 5 x_i) h$')
+
+plt.xlabel('t [s]', fontsize=14)
+plt.ylabel('x(t) [m]', fontsize=14)
+
+plt.legend(fontsize=12)
+plt.title('Método de Euler: masa–resorte–amortiguador', fontsize=16)
+
+plt.grid()
+
+plt.show()

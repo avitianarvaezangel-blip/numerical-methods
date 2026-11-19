@@ -1,0 +1,57 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Función y derivada
+def f(z):
+    return z**3 - 1
+
+def df(z):
+    return 3*z**2
+
+# Tamaño de la imagen
+N = 800
+
+# Plano complejo
+x = np.linspace(-2, 2, N)
+y = np.linspace(-2, 2, N)
+
+X, Y = np.meshgrid(x, y)
+Z = X + 1j*Y
+
+# Raíces de z^3=1
+roots = np.array([
+    1,
+    -0.5 + np.sqrt(3)/2*1j,
+    -0.5 - np.sqrt(3)/2*1j
+])
+
+# Iteraciones
+max_iter = 50
+tol = 1e-6
+
+colors = np.zeros(Z.shape)
+
+for i in range(max_iter):
+
+    Z = Z - f(Z)/df(Z)
+
+    # Verificar convergencia
+    for j, r in enumerate(roots):
+        mask = np.abs(Z-r) < tol
+        colors[mask] = j
+
+
+# Graficar
+plt.figure(figsize=(8,8))
+plt.imshow(
+    colors,
+    extent=(-2,2,-2,2),
+    origin="lower",
+    cmap="rainbow"
+)
+
+plt.title("Fractal de Newton: $z^3-1$")
+plt.xlabel("Re(z)")
+plt.ylabel("Im(z)")
+plt.axis("equal")
+plt.show()
